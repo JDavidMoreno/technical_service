@@ -78,7 +78,8 @@
 			    			<field name="address"/>
 			    			<field name="device"/>
 
-			    			<br/><separator string="Operation"/>
+			    			<br/><br/>
+			    			<separator string="Operation"/>
 			    			<field name="user_id" string="Responsible"/>
 			    			<field name="technical_team"/>
 			    			<field name="schedule_date"/>
