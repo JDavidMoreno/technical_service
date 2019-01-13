@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<odoo>
+
+	<record id="requests_kanban_view" model="ir.ui.view">
+		<field name="name">requests.kaban.view</field>
+		<field name="model">technical.service.request</field>
+		<field name="inherit_id" ref="maintenance.hr_equipment_request_view_kanban"/>
+		<field name="mode">primary</field>
+		<field name="arch" type="xml">
+			<field name="activity_state" position="after">
+				<field name="related_company_id"/>
+				<field name="technical_team"/>
+				<field name="customer"/>
+				<field name="address"/>
+				<field name="device"/>
+				<field name="custom_field1"/>
+				<field name="custom_field2"/>
+			</field>
+			<xpath expr="//div[@class='o_kanban_record_top']/b" position="inside">
+				<field name="related_company_id"/>
+			</xpath>
+			<xpath expr="//div[@class='o_kanban_record_body']/span[@class='oe_grey']" position="replace">
+				<span class="oe_grey">
+					<field name="equipment_id"/>
+					<field name="technical_team"/>
+					<br/>
+				</span>
+			</xpath>
+		</field>
+	</record>
+
+
+	<record id="requests_form_view" model="ir.ui.view">
+		<field name="name">requests.form.view</field>
+		<field name="model">technical.service.request</field>
+		<field name="inherit_id" ref="maintenance.hr_equipment_request_view_form"/>
+		<field name="mode">primary</field>
+		<field name="arch" type="xml">
+			<field name="priority" position="after">
+				<field name="customer"/>
+				<field name="address"/>
+				<field name="device"/>
+				<field name="related_company_id"/>
+				<field name="custom_field1"/>
+				<field name="custom_field2"/>
+				<field name="technical_team"/>
+			</field>
+		</field>
+	</record>
+
+
+
+	<record id="requests_action" model="ir.actions.act_window">
+		<field name="name">Technical Service Requests</field>
+		<field name="res_model">technical.service.request</field>
+	    <field name="view_mode">kanban,form</field>
+	    <field name="view_id" ref="requests_kanban_view"/>
+	    <field name="context">{'default_user_id': uid}</field>
+	    <field name="help" type="html">
+	        <p class="o_view_nocontent_smiling_face">
+	            Add a new technical service request
+	        </p>
+	    </field>
+	</record>
+
+	<record id="teams_action" model="ir.actions.act_window">
+		<field name="name">Teams</field>
+		<field name="res_model">technical.service.team</field>
+		<field name="view_mode">tree,form</field>
+	</record>
+
+	<!-- TODO - It'd be much better to write a kanban view for devices showing their photos -->
+
+	<record id="devices_form_view" model="ir.ui.view">
+		<field name="name">devices.form.view</field>
+		<field name="model">technical.service.device</field>
+		<field name="arch" type="xml">
+			<form string="Devices">
+				<sheet>
+					<field name="photo" widget='image' class="oe_avatar" options='{"preview_image": "image_medium", "size": [90, 90]}'/>
+					<group>
+						<group>
+							<field name="name" />
+						</group>
+						<group>
+							<field name="serial_code"/>
+							<field name="company_id"/>
+						</group>
+					</group>
+				</sheet>
+			</form>
+		</field>
+	</record>
+
+	<record id="devices_action" model="ir.actions.act_window">
+		<field name="name">Devices</field>
+		<field name="res_model">technical.service.device</field>
+		<field name="view_mode">tree,form</field>
+		<field name="help" type="html">
+			<p class="o_view_nocontent_smiling_face">
+				Add a new available device to your list
+			</p>
+		</field>
+	</record>
+
+
+
+</odoo>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<odoo>
+
+	<menuitem id="technical_service_main" name="Technical Service" sequence="0"/>
+	<menuitem id="technical_service_requests" name="Requests" parent="technical_service_main" action="requests_action" sequence="1"/>
+	<menuitem id="technical_service_teams" name="Teams" parent="technical_service_main" action="teams_action" sequence="2"/>
+	<menuitem id="technical_service_devices" name="Devices" parent="technical_service_main" action="devices_action" />
+
+</odoo>
