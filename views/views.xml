@@ -8,6 +8,11 @@
 		<field name="inherit_id" ref="maintenance.hr_equipment_request_view_kanban"/>
 		<field name="mode">primary</field>
 		<field name="arch" type="xml">
+			<xpath expr="//templates/t[@t-name='kanban-tooltip']" position="replace">
+				<t t-name="kanban-tooltip">
+					<p>Click here to see details</p>
+				</t>
+			</xpath>
 			<field name="activity_state" position="after">
 				<field name="related_company_id"/>
 				<field name="technical_team"/>
@@ -74,7 +79,8 @@
 			    	<group>
 			    		<group>
 			    			<separator string="Customer"/>
-			    			<field name="customer"/>
+			    			<field name="our_companies" invisible="1"/>
+			    			<field name="customer" domain="[('id','not in',our_companies)]"/>
 			    			<field name="address"/>
 			    			<field name="device"/>
 
@@ -141,12 +147,95 @@
 					<group>
 						<group>
 							<field name="name" />
+							<field name="category_id"/>
 						</group>
 						<group>
 							<field name="serial_code"/>
 							<field name="company_id"/>
 						</group>
 					</group>
+					<h3><label for="notes" string="Notes"/></h3>
+					<field name="notes"/>
+				</sheet>
+			</form>
+		</field>
+	</record>
+
+	<record id="devices_kanban_view" model="ir.ui.view">
+		<field name="name">devices.kanban.view</field>
+		<field name="model">technical.service.device</field>
+		<field name="arch" type="xml">
+			<kanban>
+				<field name="id"/>
+				<field name="image_medium"/>
+				<field name="name"/>
+				<field name="serial_code"/>
+				<field name="company_id"/>
+				<templates>
+					<t t-name="kanban-box">
+						<div t-attf-class="oe_kanban_card oe_kanban_global_click o_kanban_record_has_image_fill">
+							<div class="o_kanban_image">
+                               <img t-att-alt="record.name.value" t-att-src="kanban_image('technical.service.device', 'image_medium', record.id.raw_value)"/>
+                           </div>
+							<div class="o_dropdown_kanban dropdown">
+								<a role="button" class="dropdown-toggle o-no-caret btn" data-toggle="dropdown" href="#" aria-label="Dropdown menu" title="Dropdown menu">
+									<span class="fa fa-ellipsis-v"/>
+								</a>
+								<div class="dropdown-menu" role="menu">
+									<t t-if="widget.editable"><a role="menuitem" type="edit" class="dropdown-item">Edit...</a></t>
+									<t t-if="widget.deletable"><a role="menuitem" type="delete" class="dropdown-item">Delete</a></t>
+								</div>
+							</div>
+							<div class="oe_kanban_content">
+								<div class="o_kanban_record_top">
+								    <b class="o_kanban_record_title"><field name="name"/></b>
+								</div>
+								<div class="o_kanban_record_body">
+								    <div t-if="record.serial_code.raw_value"><field name="serial_code"/></div>
+								    <div t-if="record.company_id.raw_value"><field name="company_id"/></div>
+								</div>
+							</div>
+						</div>
+					</t>
+				</templates>
+			</kanban>
+		</field>
+	</record>
+
+	<record id="device_search_view" model="ir.ui.view">
+		<field name="name">device.search.view</field>
+		<field name="model">technical.service.device</field>
+		<field name="arch" type="xml">
+			<search>
+				<field name="name"/>
+				<field name="serial_code"/>
+				<field name="company_id"/>
+				<field name="category_id"/>
+				<group string="Group By">
+					<filter string="Company" name="groupby_company" domain="[]" context="{'group_by': 'company_id'}"/>
+					<filter string="Category" name="groupby_category" domain="[]" context="{'group_by': 'category_id'}"/>
+				</group>
+			</search>
+		</field>
+	</record>
+
+	<record id="devices_category_form_view" model="ir.ui.view">
+		<field name="name">devices_category_form_view</field>
+		<field name="model">technical.service.device.category</field>
+		<field name="arch" type="xml">
+			<form string="Category">
+				<sheet>
+					<div class="oe_title">
+					    <label for="name" class="oe_edit_only" string="Name"/>
+					    <h1>
+					        <field name="name" placeholder="Category Name"/>
+					    </h1>
+					</div>
+					<h3><label for="description" string="Description"/></h3>
+					<field name="description" placeholder="Your description here.."/>
+					<br/>
+					<h3><label for="device_ids" string="Devices"/></h3>
+					<field name="device_ids" />
 				</sheet>
 			</form>
 		</field>
@@ -155,7 +244,7 @@
 	<record id="devices_action" model="ir.actions.act_window">
 		<field name="name">Devices</field>
 		<field name="res_model">technical.service.device</field>
-		<field name="view_mode">tree,form</field>
+		<field name="view_mode">kanban,tree,form</field>
 		<field name="help" type="html">
 			<p class="o_view_nocontent_smiling_face">
 				Add a new available device to your list

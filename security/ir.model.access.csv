@@ -2,3 +2,4 @@ id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_technical_service_team,access_technical_service_team,model_technical_service_team,,1,1,1,1
 access_technical_service_request,access_technical_service_request,model_technical_service_request,,1,1,1,1
 access_technical_service_device,access_technical_service_device,model_technical_service_device,,1,1,1,1
+access_technical_service_device_category,access_technical_service_device_category,model_technical_service_device_category,,1,1,1,1
