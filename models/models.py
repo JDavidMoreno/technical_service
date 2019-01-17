@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
-from odoo import models, fields, api, tools
+from odoo import models, fields, api, tools, _
+from odoo.exceptions import ValidationError, RedirectWarning
 import logging
 
 _logger = logging.getLogger(__name__)
@@ -45,6 +46,7 @@ class TechnicalServiceTeam(models.Model):
 	member_ids = fields.One2many('res.users', 'name', string="Members")
 	color = fields.Integer(string="Color Index", default=0)
 	request_ids = fields.One2many('technical.service.request', 'name', string="Request")
+	rate = fields.Float(string="Rate", help="Service rate per hour", required=True)
 
 
 class TechnicalServiceRequest(models.Model):
@@ -57,9 +59,28 @@ class TechnicalServiceRequest(models.Model):
 		companies_ids = [rec.related_company_id.id for rec in records]
 
 		return [(6, 0, companies_ids)]
+
+	@api.multi
+	def invoice_see(self):
+		_logger.info('#############')
+		_logger.info(self.env.context)
+
+		self.ensure_one
+
+		action = self.env.ref('technical_service.invoice_see_action').read()[0]
+		action['domain'] = [('id', '=', self.invoice_id.id)]
+		return action
+
+
+	@api.multi
+	def action_view_partner_invoices(self):
+	    self.ensure_one()
+	    action = self.env.ref('account.action_invoice_refund_out_tree').read()[0]
+	    action['domain'] = literal_eval(action['domain'])
+	    action['domain'].append(('partner_id', 'child_of', self.id))
+	    return action
 		
-
-
+	stage_name = fields.Char(related="stage_id.name", readonly=True)
 	customer = fields.Many2one('res.partner', string="Customer", required=True)
 	our_companies = fields.Many2many('res.partner', store=True, default=_get_our_companies)
 	address = fields.Char(string="Address", compute="_get_customer_address", store=True)
@@ -68,8 +89,12 @@ class TechnicalServiceRequest(models.Model):
 	custom_field1 = fields.Char(string="Custom Field - 1")
 	custom_field2 = fields.Char(string="Custom Field - 2")
 	technical_team = fields.Many2one('technical.service.team', string="Technical Team", required=True)
-
-
+	requirements = fields.Boolean(default=True)
+	invoice_line_ids = fields.One2many('account.invoice.line', 'name')
+	invoice_id = fields.Many2one('account.invoice', string="Invoice")
+	company_id = fields.Many2one('res.company', string='Company', change_default=True,
+	    required=True, readonly=True,
+	    default=lambda self: self.env['res.company']._company_default_get('account.invoice'))
 
 
 	@api.onchange('related_company_id')
@@ -92,4 +117,145 @@ class TechnicalServiceRequest(models.Model):
 				if customer.country_id:
 					address += customer.country_id.name
 				request.address = address
+
+
+	def check_requirements(self):
+		requirements = {}
+		action = {
+				'name': "Fill Requirements",
+				'view_mode': 'form',
+				'view_type': 'form',
+				'res_model': 'technical.service.request.duration',
+				'type': 'ir.actions.act_window',
+				'target': 'new',
+				}
+
+		if self.stage_id.name == 'Time & Replacements':
+			if not self.schedule_date:
+				res_id = self.env['technical.service.request.duration'].create({'b_schedule_date': False})
+				action.update({'res_id': res_id.id})
+				return action
+
+		if self.stage_id.name == 'Repaired':
+			if not self.schedule_date:
+				requirements.update({'b_schedule_date': False})
+			if self.duration == 0:
+				requirements.update({'b_duration': False})
+			if bool(requirements):
+				res_id = self.env['technical.service.request.duration'].create(requirements)
+				action.update({'res_id': res_id.id})
+				return action
+				
+		if self.stage_id.name == 'Scrap':
+			if not self.schedule_date:
+				requirements.update({'b_schedule_date': False})
+			if self.duration == 0:
+				requirements.update({'b_duration': False})
+			if bool(requirements):
+				res_id = self.env['technical.service.request.duration'].create(requirements)
+				action.update({'res_id': res_id.id})
+				return action
+
+		if self.stage_id.name == 'Invoiced':
+			if not self.schedule_date:
+				requirements.update({'b_schedule_date': False})
+			if self.duration == 0:
+				requirements.update({'b_duration': False})
+			if bool(requirements):
+				res_id = self.env['technical.service.request.duration'].create(requirements)
+				action.update({'res_id': res_id.id})
+				return action
+
+
+
+	@api.onchange('stage_id')
+	def _check_requirements(self):
+
+		self.requirements = True
+		message = []
+
+		if self.stage_id.name == 'Time & Replacements':
+			if not self.schedule_date:
+				self.requirements = False
+				return {'warning': {'title': "Did you specify the Scheduled Date?",
+									'message': "Please, click the 'Requirements' button to fill all the details."}}
+
+		if self.stage_id.name == 'Repaired':
+			if not self.schedule_date:
+				self.requirements = False
+				message.append('Scheduled Date')
+				
+			if self.duration == 0:
+				self.requirements = False
+				message.append('Duration')
+
+			if not self.invoice_id:
+				_logger.info('##########')
+				_logger.info('Not Invoice')
+
+				draft = {'partner_id': self.customer.id,
+						 'state': 'draft',
+						 'type': 'out_invoice',
+						 'account_id': 480,
+						 'currency_id': 1,
+						 'company_id': self.env['res.company']._company_default_get('technical.service.request').id,
+						 'journal_id': 1,
+						 }
+				invoice = self.env['account.invoice'].create(draft).id
+				_logger.info(invoice)
+				self.invoice_id = invoice
+
+			if self.requirements == False:
+				return {'warning': {'title': "Did you specify the " + (" and the ".join(message)) + "?",
+									'message': "Please, click the 'Requirements' button to fill all the details."}}
+
+		if self.stage_id.name == 'Scrap':
+			if not self.schedule_date:
+				self.requirements = False
+				message.append('Scheduled Date')
+				
+			if self.duration == 0:
+				self.requirements = False
+				message.append('Duration')
+
+			if self.requirements == False:
+				return {'warning': {'title': "Did you specify the " + (" and the ".join(message)) + "?",
+									'message': "Please, click the 'Requirements' button to fill all the details."}}
+
+		if self.stage_id.name == 'Invoiced':
+			if not self.schedule_date:
+				self.requirements = False
+				message.append('Scheduled Date')
+				
+			if self.duration == 0:
+				self.requirements = False
+				message.append('Duration')
+
+			if self.requirements == False:
+				return {'warning': {'title': "Did you specify the " + (" and the ".join(message)) + "?",
+									'message': "Please, click the 'Requirements' button to fill all the details."}}
+
+
+	# @api.multi
+	# def crear_factura(self):
+	# 	for linea in self.transformacion_ids:
+	# 		name_group = linea.name[:linea.name.find(':')]
+	# 		factura = self.env['account.invoice'].search([('partner_id', '=', 1), ('project_id', '=', self.id), ('template_create', '=', True) ,('template_name', '=', name_group)])
+	# 		if not factura:
+	# 			factura = self.env['account.invoice'].create({'partner_id':1, 'project_id':self.id, 'template_create':True, 'template_name':name_group})
+	# 		if not self.env['account.invoice.line'].search([('name', '=', linea.name), ('template_name', '=', name_group)]):
+	# 			self._crear_linea_factura(factura, linea.name, linea.id)
+	
+	
+	# def _crear_linea_factura(self, account, name, transf_id):
+	# 	vals= {
+	# 		'name':name,
+	# 		'price_unit':0.00,
+	# 		'quantity':1,
+	# 		'invoice_id':account.id,
+	# 		'account_id': account.account_id.id,
+	# 		'transformacion':transf_id,
+	# 	}
+	# 	self.env['account.invoice.line'].create(vals)
+	
 

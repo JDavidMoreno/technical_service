@@ -2,6 +2,24 @@
 
 <odoo>
 
+	<template id="assets_backend" name="Technical Service Assets" inherit_id="web.assets_backend">
+	    <xpath expr="." position="inside">
+	         <link rel="stylesheet" href="technical_service/static/src/css/styles.css"/>
+	    </xpath>
+	</template>
+
+
+
+	<record id="invoice_see_action" model="ir.actions.act_window">
+		<field name="name">See Invoice</field>
+		<field name="res_model">account.invoice</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form,calendar,graph</field>
+		<field name="view_id" ref="account.invoice_tree"/>
+		<field name="search_view_id" ref="account.view_account_invoice_filter"/>
+	</record>
+
+
 	<record id="requests_kanban_view" model="ir.ui.view">
 		<field name="name">requests.kaban.view</field>
 		<field name="model">technical.service.request</field>
@@ -21,6 +39,11 @@
 				<field name="device"/>
 				<field name="custom_field1"/>
 				<field name="custom_field2"/>
+				<field name="schedule_date"/>
+				<field name="close_date"/>
+				<field name="requirements"/>
+				<field name="duration"/>
+				<field name="invoice_id"/>
 			</field>
 			<xpath expr="//div[@class='o_kanban_record_top']/b" position="inside">
 				<field name="related_company_id"/>
@@ -31,6 +54,9 @@
 					<field name="technical_team"/>
 					<br/>
 				</span>
+			</xpath>
+			<xpath expr="//div[hasclass('o_kanban_record_bottom')]" position="after">
+				<button type="object" name="check_requirements" class="btn-primary" attrs="{'invisible': [('requirements', '=', True)]}">Requirements</button>
 			</xpath>
 		</field>
 	</record>
@@ -44,15 +70,25 @@
 			    <header>
 			        <button string="Cancel" name="archive_equipment_request" type="object" attrs="{'invisible': [('archive', '=', True)]}"/>
 			        <button string="Reopen Request" name="reset_equipment_request" type="object" attrs="{'invisible': [('archive', '=', False)]}"/>
+			        <button string="Requirements" type="object" name="check_requirements" class="btn-primary" attrs="{'invisible': [('requirements', '=', True)]}"/>
+			        <button string="Generate Invoice" name="generate_invoice" type="object" attrs="{'invisible': [('stage_name', 'not in', ('Repaired'))]}" class="btn-primary" />
 			        <field name="stage_id" widget="statusbar" options="{'clickable': '1'}" attrs="{'invisible': [('archive', '=', True)]}"/>
+
 			    </header>
 			    <sheet>
-			    	<field name="equipment_id" invisible="1"/>
+			    	<div class="oe_button_box" attrs="{'invisible': [('stage_name', 'not in', ('Invoiced',))]}">
+                        <button name="invoice_see" type="object" class="oe_stat_button" icon="fa-file-text">
+                            <field name="invoice_id" widget="statinfo"/>
+                        </button>
+                    </div>
+			    	<!-- <field name="equipment_id" invisible="1"/>
 			    	<field name="maintenance_type" invisible="1"/>
-			    	<field name="maintenance_team_id" invisible="1"/>
+			    	<field name="maintenance_team_id" invisible="1"/> -->
 			    	<field name="company_id" groups="base.group_multi_company" options="{'no_create': True}" invisible="1"/>
 			    	<field name="category_id" groups="maintenance.group_equipment_manager" invisible="1"/>
-			    	<field name="maintenance_type" widget="radio" invisible="1"/>
+			    	<!-- <field name="maintenance_type" widget="radio" invisible="1"/> -->
+			    	<field name="requirements" invisible="1"/>
+			    	<field name="stage_name" invisible="1"/>
 
 			    	<div attrs="{'invisible': [('archive', '=', False)]}">
 			    	    <span class="badge badge-warning float-right">Canceled</span>
@@ -89,12 +125,6 @@
 			    			<field name="user_id" string="Responsible"/>
 			    			<field name="technical_team"/>
 			    			<field name="schedule_date"/>
-                            <label for="duration"/>
-                            <div>
-                                <field name="duration"
-                                       widget="float_time"
-                                       class="oe_inline"/> <span class="ml8">hours</span>
-                            </div>
                             <field name="close_date" groups="base.group_no_one" readonly="True"/>
                         </group>
                         <group>
@@ -104,6 +134,32 @@
                         	<field name="custom_field2"/>
                         </group>
                     </group>
+                    <div class="technical_service" attrs="{'invisible': [('stage_name', 'not in', ('Time &amp; Replacements', 'Repaired', 'Scrap', 'Invoiced'))]}">
+                		<group>
+                			<group>
+				    			<separator string="Time &amp; Replacements"/><br/>
+	                            <label for="duration" />
+	                			<div colspan="1">
+	                			    <field name="duration"
+	                			           widget="float_time"
+	                			           class="oe_inline"/> <span class="ml8">hours</span>
+	                			</div>
+                			</group>
+                		</group>
+                    	<field name="invoice_line_ids">
+                    		<tree editable="bottom" class="technical_service_tree">
+                    			<field name="name" string="Replacement"/>
+                    			<field name="account_id" invisible="1" />
+                    			<field name="quantity"/>
+                    			<field name="uom_id" groups="uom.group_uom"/>
+                    			<field name="price_unit"/>
+                    			<field date-name="invoice_line_tax_ids" name="invoice_line_tax_ids" context="{'tree_view_ref': 'account.account_tax_view_tree', 'search_view_ref': 'account.account_tax_view_search'}" domain="[('type_tax_use', '=', 'sale'), ('company_id', '=', parent.company_id)]" widget="many2many_tags"/>
+                    			<field name="price_subtotal" groups="account.group_show_line_subtotals_tax_excluded"/>
+                    			<field name="price_total" groups="account.group_show_line_subtotals_tax_included"/>
+                    			<field name="currency_id" invisible="1"/>
+                    		</tree>
+                    	</field>
+                    </div>
                     <field name='description' placeholder="Internal Note ......."/>
                 </sheet>
                 <div class="oe_chatter">
@@ -121,7 +177,7 @@
 		<field name="res_model">technical.service.request</field>
 	    <field name="view_mode">kanban,form</field>
 	    <field name="view_id" ref="requests_kanban_view"/>
-	    <field name="context">{'default_user_id': uid}</field>
+	    <field name="context">{'default_user_id': uid, 'default_account_id': 480, 'default_currency_id': 1}</field>
 	    <field name="help" type="html">
 	        <p class="o_view_nocontent_smiling_face">
 	            Add a new technical service request

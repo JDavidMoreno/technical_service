@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<odoo>
+	<record id="duration_wizard" model="ir.ui.view">
+		<field name="name">duration.wizard</field>
+		<field name="model">technical.service.request.duration</field>
+		<field name="arch" type="xml">
+			<form>
+				<field name="b_duration" invisible="1"/>
+				<field name="b_schedule_date" invisible="1"/>
+				<div attrs="{'invisible': [('b_duration', '=', True)]}">
+					<h5><b>Have you really spent 0 hours in your Technical Service?</b></h5>
+					<p>If not, please indicate here the amount of time spent:</p>
+					<group>
+						<group>
+							<field name="duration" />
+						</group>
+					</group>
+				</div>
+				<div attrs="{'invisible': [('b_schedule_date', '=', True)]}">
+					<h5><b>When are you going to see the customer?</b></h5>
+					<p>Choose a date:</p>
+					<group>
+						<group>
+							<field name="schedule_date" />
+						</group>
+					</group>
+				</div>
+				<footer>
+					<button name="confirm_duration" type="object" string="Confirm" class="oe_right oe_hightlight"/>
+					<button special="cancel" string="Cancel" class="oe_left oe_link"/>
+				</footer>
+			</form>
+		</field>
+	</record>
+
+
+</odoo>

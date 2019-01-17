@@ -1,0 +1,7 @@
+.technical_service_tree table thead tr th, .technical_service_tree table tbody tr th{
+	width: 20%;
+}
+
+.technical_service_tree table {
+	width: 99%;
+}

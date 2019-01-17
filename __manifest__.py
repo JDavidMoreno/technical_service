@@ -6,7 +6,7 @@
         Manage Technical Service for different companies and creates Invoices automatically""",
 
     'description': """
-        Similar in spirit to Maintenance module but in this case just for external actions. You can create and manage Technical Services
+        Close in spirit to Maintenance module but in this case just for external actions. You can create and manage Technical Services
         teams and assign them task to be completed throug different stages. At the final stage an Invoice is automatically generated 
         taking into account the amount of time spent in the service and the posibility of extra cost caused by the replacement of pieces
         during the reparation.
@@ -24,15 +24,18 @@
     'installable': True,
 
     # any module necessary for this one to work correctly
-    'depends': ['base', 'maintenance'],
+    'depends': ['base', 'maintenance', 'account'],
 
     # always loaded
     'data': [
         'security/ir.model.access.csv',
         'views/views.xml',
+        'data/data.xml',
+        'wizard/wizards.xml',
         'views/menuitems.xml',
     ],
     # only loaded in demonstration mode
     'demo': [
     ],
+    'css': ['static/src/css/styles.css'],
 }
