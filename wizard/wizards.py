@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
 
+import logging
+
 from odoo import models, fields, api
 from odoo.exceptions import ValidationError
-import logging
+
 
 _logger = logging.getLogger(__name__)
 
@@ -31,8 +33,9 @@ class TechnicalServiceRequestDuration(models.TransientModel):
 
 		if all([self.b_duration, self.schedule_date]):
 			request.requirements = True
+			
 		else:
-			return {}
+			return request._check_requirements()
 
 		
 		

@@ -13,7 +13,12 @@
 					<p>If not, please indicate here the amount of time spent:</p>
 					<group>
 						<group>
-							<field name="duration" />
+				            <label for="duration" />
+							<div colspan="1">
+							    <field name="duration"
+							           widget="float_time"
+							           class="oe_inline"/> <span class="ml8">hours</span>
+							</div>
 						</group>
 					</group>
 				</div>
@@ -33,6 +38,4 @@
 			</form>
 		</field>
 	</record>
-
-
 </odoo>

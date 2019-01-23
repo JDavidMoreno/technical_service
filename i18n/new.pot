@@ -1,0 +1,1843 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* maintenance
+#	* technical_service
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-01-23 11:47+0000\n"
+"PO-Revision-Date: 2019-01-23 11:47+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: technical_service
+#: code:addons/technical_service/models/models.py:225
+#: code:addons/technical_service/models/models.py:238
+#: code:addons/technical_service/models/models.py:251
+#, python-format
+msgid " and the "
+msgstr ""
+
+#. module: maintenance
+#: model_terms:ir.ui.view,arch_db:maintenance.hr_equipment_request_view_kanban
+msgid "<b>Category:</b>"
+msgstr ""
+
+#. module: technical_service
+#: model_terms:ir.ui.view,arch_db:technical_service.duration_wizard
+msgid "<b>Have you really spent 0 hours in your Technical Service?</b>"
+msgstr ""
+
+#. module: maintenance
+#: model_terms:ir.ui.view,arch_db:maintenance.hr_equipment_view_kanban
+msgid "<b>Model Number:</b>"
+msgstr ""
+
+#. module: maintenance
+#: model_terms:ir.ui.view,arch_db:maintenance.hr_equipment_request_view_kanban
+msgid "<b>Request to:</b>"
+msgstr ""
+
+#. module: maintenance
+#: model_terms:ir.ui.view,arch_db:maintenance.hr_equipment_view_kanban
+msgid "<b>Serial Number:</b>"
+msgstr ""
+
+#. module: technical_service
+#: model_terms:ir.ui.view,arch_db:technical_service.duration_wizard
+msgid "<b>When are you going to see the customer?</b>"
+msgstr ""
+
+#. modules: maintenance, technical_service
+#: model_terms:ir.ui.view,arch_db:maintenance.hr_equipment_request_view_form
+#: model_terms:ir.ui.view,arch_db:technical_service.requests_form_view
+msgid "<span class=\"badge badge-warning float-right\">Canceled</span>"
+msgstr ""
+
+#. modules: maintenance, technical_service
+#: model_terms:ir.ui.view,arch_db:maintenance.hr_equipment_request_view_form
+#: model_terms:ir.ui.view,arch_db:technical_service.duration_wizard
+#: model_terms:ir.ui.view,arch_db:technical_service.requests_form_view
+msgid "<span class=\"ml8\">hours</span>"
+msgstr ""
+
+#. module: maintenance
+#: model_terms:ir.ui.view,arch_db:maintenance.maintenance_team_kanban
+msgid "<span>Reporting</span>"
+msgstr ""
+
+#. module: maintenance
+#: model_terms:ir.ui.view,arch_db:maintenance.maintenance_team_kanban
+msgid "<span>View</span>"
+msgstr ""
+
+#. module: maintenance
+#: model_terms:ir.ui.view,arch_db:maintenance.view_maintenance_equipment_category_kanban
+msgid "<strong>Equipments:</strong>"
+msgstr ""
+
+#. module: maintenance
+#: model_terms:ir.ui.view,arch_db:maintenance.view_maintenance_equipment_category_kanban
+msgid "<strong>Maintenance:</strong>"
+msgstr ""
+
+#. module: maintenance
+#: model:ir.model.fields,help:maintenance.field_maintenance_equipment_category__alias_defaults
+msgid "A Python dictionary that will be evaluated to provide default values when creating new records for this alias."
+msgstr ""
+
+#. modules: maintenance, technical_service
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_equipment__message_needaction
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_equipment_category__message_needaction
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_request__message_needaction
+#: model:ir.model.fields,field_description:technical_service.field_technical_service_request__message_needaction
+msgid "Action Needed"
+msgstr ""
+
+#. module: maintenance
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_equipment__active
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_team__active
+msgid "Active"
+msgstr ""
+
+#. modules: maintenance, technical_service
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_equipment__activity_ids
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_request__activity_ids
+#: model:ir.model.fields,field_description:technical_service.field_technical_service_request__activity_ids
+msgid "Activities"
+msgstr ""
+
+#. modules: maintenance, technical_service
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_equipment__activity_state
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_request__activity_state
+#: model:ir.model.fields,field_description:technical_service.field_technical_service_request__activity_state
+msgid "Activity State"
+msgstr ""
+
+#. module: maintenance
+#: model:ir.actions.act_window,name:maintenance.mail_activity_type_action_config_maintenance
+#: model:ir.ui.menu,name:maintenance.maintenance_menu_config_activity_type
+msgid "Activity Types"
+msgstr ""
+
+#. module: technical_service
+#: model_terms:ir.actions.act_window,help:technical_service.devices_action
+msgid "Add a new available device to your list"
+msgstr ""
+
+#. module: maintenance
+#: model_terms:ir.actions.act_window,help:maintenance.hr_equipment_action
+#: model_terms:ir.actions.act_window,help:maintenance.hr_equipment_action_from_category_form
+msgid "Add a new equipment"
+msgstr ""
+
+#. module: maintenance
+#: model_terms:ir.actions.act_window,help:maintenance.hr_equipment_category_action
+msgid "Add a new equipment category"
+msgstr ""
+
+#. module: maintenance
+#: model_terms:ir.actions.act_window,help:maintenance.hr_equipment_request_action
+#: model_terms:ir.actions.act_window,help:maintenance.hr_equipment_request_action_cal
+#: model_terms:ir.actions.act_window,help:maintenance.hr_equipment_request_action_from_equipment
+#: model_terms:ir.actions.act_window,help:maintenance.hr_equipment_request_action_link
+#: model_terms:ir.actions.act_window,help:maintenance.hr_equipment_todo_request_action_from_dashboard
+#: model_terms:ir.actions.act_window,help:maintenance.maintenance_request_action_reports
+msgid "Add a new maintenance request"
+msgstr ""
+
+#. module: maintenance
+#: model_terms:ir.actions.act_window,help:maintenance.hr_equipment_stage_action
+#: model_terms:ir.actions.act_window,help:maintenance.maintenance_dashboard_action
+msgid "Add a new stage in the maintenance request"
+msgstr ""
+
+#. module: technical_service
+#: model_terms:ir.actions.act_window,help:technical_service.requests_action
+msgid "Add a new technical service request"
+msgstr ""
+
+#. module: maintenance
+#: model_terms:ir.actions.act_window,help:maintenance.maintenance_team_action_settings
+msgid "Add a team in the maintenance request"
+msgstr ""
+
+#. module: technical_service
+#: model:ir.model.fields,field_description:technical_service.field_technical_service_request__address
+msgid "Address"
+msgstr ""
+
+#. module: maintenance
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_equipment_category__alias_id
+msgid "Alias"
+msgstr ""
+
+#. module: maintenance
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_equipment_category__alias_contact
+msgid "Alias Contact Security"
+msgstr ""
+
+#. module: maintenance
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_equipment_category__alias_name
+msgid "Alias Name"
+msgstr ""
+
+#. module: maintenance
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_equipment_category__alias_domain
+msgid "Alias domain"
+msgstr ""
+
+#. module: maintenance
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_equipment_category__alias_model_id
+msgid "Aliased Model"
+msgstr ""
+
+#. module: maintenance
+#: model_terms:ir.ui.view,arch_db:maintenance.maintenance_team_kanban
+msgid "All"
+msgstr ""
+
+#. module: maintenance
+#: sql_constraint:maintenance.equipment:0
+msgid "Another asset already exists with this serial number!"
+msgstr ""
+
+#. modules: maintenance, technical_service
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_request__archive
+#: model:ir.model.fields,field_description:technical_service.field_technical_service_request__archive
+msgid "Archive"
+msgstr ""
+
+#. module: maintenance
+#: model_terms:ir.ui.view,arch_db:maintenance.hr_equipment_request_view_search
+#: model_terms:ir.ui.view,arch_db:maintenance.hr_equipment_view_search
+#: model_terms:ir.ui.view,arch_db:maintenance.maintenance_team_view_search
+msgid "Archived"
+msgstr ""
+
+#. module: maintenance
+#: model_terms:ir.ui.view,arch_db:maintenance.hr_equipment_category_view_tree
+#: model_terms:ir.ui.view,arch_db:maintenance.hr_equipment_view_tree
+msgid "Assign To User"
+msgstr ""
+
+#. module: maintenance
+#: model_terms:ir.ui.view,arch_db:maintenance.hr_equipment_request_view_search
+#: model_terms:ir.ui.view,arch_db:maintenance.hr_equipment_view_search
+msgid "Assigned"
+msgstr ""
+
+#. module: maintenance
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_equipment__assign_date
+msgid "Assigned Date"
+msgstr ""
+
+#. modules: maintenance, technical_service
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_equipment__message_attachment_count
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_equipment_category__message_attachment_count
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_request__message_attachment_count
+#: model:ir.model.fields,field_description:technical_service.field_technical_service_request__message_attachment_count
+msgid "Attachment Count"
+msgstr ""
+
+#. module: maintenance
+#: model_terms:ir.ui.view,arch_db:maintenance.hr_equipment_view_search
+msgid "Available"
+msgstr ""
+
+#. module: technical_service
+#: model_terms:ir.ui.view,arch_db:technical_service.teams_form_view
+msgid "Avatar"
+msgstr ""
+
+#. module: technical_service
+#: model:ir.model.fields,field_description:technical_service.field_technical_service_request_duration__b_duration
+msgid "B Duration"
+msgstr ""
+
+#. module: technical_service
+#: model:ir.model.fields,field_description:technical_service.field_technical_service_request_duration__b_schedule_date
+msgid "B Schedule Date"
+msgstr ""
+
+#. modules: maintenance, technical_service
+#: model_terms:ir.ui.view,arch_db:maintenance.hr_equipment_request_view_search
+#: model_terms:ir.ui.view,arch_db:maintenance.maintenance_team_kanban
+#: selection:maintenance.request,kanban_state:0
+#: selection:technical.service.request,kanban_state:0
+msgid "Blocked"
+msgstr ""
+
+#. modules: maintenance, technical_service
+#: model_terms:ir.ui.view,arch_db:maintenance.hr_equipment_request_view_form
+#: model_terms:ir.ui.view,arch_db:technical_service.duration_wizard
+#: model_terms:ir.ui.view,arch_db:technical_service.requests_form_view
+msgid "Cancel"
+msgstr ""
+
+#. module: technical_service
+#: model:ir.model,name:technical_service.model_technical_service_device_category
+msgid "Categories for Devices"
+msgstr ""
+
+#. modules: maintenance, technical_service
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_request__category_id
+#: model_terms:ir.ui.view,arch_db:maintenance.hr_equipment_request_view_search
+#: model_terms:ir.ui.view,arch_db:maintenance.hr_equipment_view_search
+#: model:ir.model.fields,field_description:technical_service.field_technical_service_device__category_id
+#: model:ir.model.fields,field_description:technical_service.field_technical_service_device_category__name
+#: model:ir.model.fields,field_description:technical_service.field_technical_service_request__category_id
+#: model_terms:ir.ui.view,arch_db:technical_service.device_search_view
+#: model_terms:ir.ui.view,arch_db:technical_service.devices_category_form_view
+msgid "Category"
+msgstr ""
+
+#. modules: maintenance, technical_service
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_equipment_category__name
+#: model_terms:ir.ui.view,arch_db:maintenance.hr_equipment_category_view_form
+#: model_terms:ir.ui.view,arch_db:maintenance.hr_equipment_category_view_search
+#: model_terms:ir.ui.view,arch_db:technical_service.devices_category_form_view
+msgid "Category Name"
+msgstr ""
+
+#. module: technical_service
+#: model_terms:ir.ui.view,arch_db:technical_service.duration_wizard
+msgid "Choose a date:"
+msgstr ""
+
+#. module: technical_service
+#: model_terms:ir.ui.view,arch_db:technical_service.requests_kanban_view
+msgid "Click here to see details"
+msgstr ""
+
+#. modules: maintenance, technical_service
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_request__close_date
+#: model:ir.model.fields,field_description:technical_service.field_technical_service_request__close_date
+msgid "Close Date"
+msgstr ""
+
+#. modules: maintenance, technical_service
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_equipment__color
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_equipment_category__color
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_request__color
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_team__color
+#: model:ir.model.fields,field_description:technical_service.field_technical_service_request__color
+#: model:ir.model.fields,field_description:technical_service.field_technical_service_team__color
+msgid "Color Index"
+msgstr ""
+
+#. module: maintenance
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_equipment_category__note
+msgid "Comments"
+msgstr ""
+
+#. modules: maintenance, technical_service
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_equipment__company_id
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_equipment_category__company_id
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_request__company_id
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_team__company_id
+#: model:ir.model.fields,field_description:technical_service.field_technical_service_device__company_id
+#: model:ir.model.fields,field_description:technical_service.field_technical_service_request__company_id
+#: model_terms:ir.ui.view,arch_db:technical_service.device_search_view
+#: model_terms:ir.ui.view,arch_db:technical_service.request_search_view
+msgid "Company"
+msgstr ""
+
+#. module: maintenance
+#: model:ir.ui.menu,name:maintenance.menu_maintenance_configuration
+msgid "Configuration"
+msgstr ""
+
+#. module: technical_service
+#: model_terms:ir.ui.view,arch_db:technical_service.duration_wizard
+msgid "Confirm"
+msgstr ""
+
+#. module: technical_service
+#: model:ir.model,name:technical_service.model_technical_service_request_duration
+msgid "Confirm the duration of the Technical Request					in the case it's still 0"
+msgstr ""
+
+#. modules: maintenance, technical_service
+#: selection:maintenance.request,maintenance_type:0
+#: selection:technical.service.request,maintenance_type:0
+msgid "Corrective"
+msgstr ""
+
+#. module: maintenance
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_equipment__cost
+msgid "Cost"
+msgstr ""
+
+#. module: maintenance
+#: model_terms:ir.ui.view,arch_db:maintenance.hr_equipment_request_view_search
+msgid "Created By"
+msgstr ""
+
+#. modules: maintenance, technical_service
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_equipment__create_uid
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_equipment_category__create_uid
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_request__create_uid
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_stage__create_uid
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_team__create_uid
+#: model:ir.model.fields,field_description:technical_service.field_technical_service_device__create_uid
+#: model:ir.model.fields,field_description:technical_service.field_technical_service_device_category__create_uid
+#: model:ir.model.fields,field_description:technical_service.field_technical_service_request__create_uid
+#: model:ir.model.fields,field_description:technical_service.field_technical_service_request_duration__create_uid
+#: model:ir.model.fields,field_description:technical_service.field_technical_service_team__create_uid
+msgid "Created by"
+msgstr ""
+
+#. modules: maintenance, technical_service
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_request__owner_user_id
+#: model:ir.model.fields,field_description:technical_service.field_technical_service_request__owner_user_id
+msgid "Created by User"
+msgstr ""
+
+#. modules: maintenance, technical_service
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_equipment__create_date
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_equipment_category__create_date
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_request__create_date
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_stage__create_date
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_team__create_date
+#: model:ir.model.fields,field_description:technical_service.field_technical_service_device__create_date
+#: model:ir.model.fields,field_description:technical_service.field_technical_service_device_category__create_date
+#: model:ir.model.fields,field_description:technical_service.field_technical_service_request__create_date
+#: model:ir.model.fields,field_description:technical_service.field_technical_service_request_duration__create_date
+#: model:ir.model.fields,field_description:technical_service.field_technical_service_team__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: maintenance
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_equipment__maintenance_open_count
+msgid "Current Maintenance"
+msgstr ""
+
+#. module: technical_service
+#: model:ir.model.fields,field_description:technical_service.field_technical_service_request__custom_field1
+msgid "Custom Field - 1"
+msgstr ""
+
+#. module: technical_service
+#: model:ir.model.fields,field_description:technical_service.field_technical_service_request__custom_field2
+msgid "Custom Field - 2"
+msgstr ""
+
+#. module: technical_service
+#: model:ir.model.fields,field_description:technical_service.field_technical_service_request__partner_id
+#: model_terms:ir.ui.view,arch_db:technical_service.requests_form_view
+msgid "Customer"
+msgstr ""
+
+#. module: maintenance
+#: model:ir.ui.menu,name:maintenance.menu_m_dashboard
+msgid "Dashboard"
+msgstr ""
+
+#. module: technical_service
+#: model_terms:ir.ui.view,arch_db:technical_service.requests_form_view
+msgid "Data by Company"
+msgstr ""
+
+#. module: maintenance
+#: model:ir.model.fields,help:maintenance.field_maintenance_equipment__effective_date
+msgid "Date at which the equipment became effective. This date will be used to compute the Mean Time Between Failure."
+msgstr ""
+
+#. module: maintenance
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_equipment__next_action_date
+msgid "Date of the next preventive maintenance"
+msgstr ""
+
+#. modules: maintenance, technical_service
+#: model:ir.model.fields,help:maintenance.field_maintenance_request__request_date
+#: model:ir.model.fields,help:technical_service.field_technical_service_request__request_date
+msgid "Date requested for the maintenance to happen"
+msgstr ""
+
+#. module: technical_service
+#: model:ir.model.fields,help:technical_service.field_technical_service_request_duration__schedule_date
+msgid "Date the maintenance team plans the maintenance.  It should not differ much from the Request Date."
+msgstr ""
+
+#. modules: maintenance, technical_service
+#: model:ir.model.fields,help:maintenance.field_maintenance_request__schedule_date
+#: model:ir.model.fields,help:technical_service.field_technical_service_request__schedule_date
+msgid "Date the maintenance team plans the maintenance.  It should not differ much from the Request Date. "
+msgstr ""
+
+#. modules: maintenance, technical_service
+#: model:ir.model.fields,help:maintenance.field_maintenance_request__close_date
+#: model:ir.model.fields,help:technical_service.field_technical_service_request__close_date
+msgid "Date the maintenance was finished. "
+msgstr ""
+
+#. module: maintenance
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_equipment__period
+msgid "Days between each preventive maintenance"
+msgstr ""
+
+#. module: maintenance
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_equipment_category__alias_defaults
+msgid "Default Values"
+msgstr ""
+
+#. modules: maintenance, technical_service
+#: model_terms:ir.ui.view,arch_db:maintenance.hr_equipment_request_view_kanban
+#: model_terms:ir.ui.view,arch_db:maintenance.hr_equipment_view_kanban
+#: model_terms:ir.ui.view,arch_db:technical_service.devices_kanban_view
+msgid "Delete"
+msgstr ""
+
+#. modules: maintenance, technical_service
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_request__description
+#: model_terms:ir.ui.view,arch_db:maintenance.hr_equipment_view_form
+#: model:ir.model.fields,field_description:technical_service.field_technical_service_device_category__description
+#: model:ir.model.fields,field_description:technical_service.field_technical_service_request__description
+#: model_terms:ir.ui.view,arch_db:technical_service.devices_category_form_view
+msgid "Description"
+msgstr ""
+
+#. module: technical_service
+#: model:ir.model.fields,field_description:technical_service.field_technical_service_request__device
+msgid "Device"
+msgstr ""
+
+#. module: technical_service
+#: model:ir.actions.act_window,name:technical_service.devices_action
+#: model:ir.model.fields,field_description:technical_service.field_technical_service_device_category__device_ids
+#: model:ir.ui.menu,name:technical_service.technical_service_devices
+#: model_terms:ir.ui.view,arch_db:technical_service.devices_category_form_view
+msgid "Devices"
+msgstr ""
+
+#. module: technical_service
+#: code:addons/technical_service/models/models.py:225
+#: code:addons/technical_service/models/models.py:238
+#: code:addons/technical_service/models/models.py:251
+#, python-format
+msgid "Did you specify the "
+msgstr ""
+
+#. module: technical_service
+#: code:addons/technical_service/models/models.py:194
+#: code:addons/technical_service/models/models.py:212
+#, python-format
+msgid "Did you specify the Scheduled Date?"
+msgstr ""
+
+#. modules: maintenance, technical_service
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_equipment__display_name
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_equipment_category__display_name
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_request__display_name
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_stage__display_name
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_team__display_name
+#: model:ir.model.fields,field_description:technical_service.field_technical_service_device__display_name
+#: model:ir.model.fields,field_description:technical_service.field_technical_service_device_category__display_name
+#: model:ir.model.fields,field_description:technical_service.field_technical_service_request__display_name
+#: model:ir.model.fields,field_description:technical_service.field_technical_service_request_duration__display_name
+#: model:ir.model.fields,field_description:technical_service.field_technical_service_team__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: maintenance
+#: model_terms:ir.ui.view,arch_db:maintenance.hr_equipment_request_view_search
+#: model_terms:ir.ui.view,arch_db:maintenance.maintenance_team_kanban
+msgid "Done"
+msgstr ""
+
+#. modules: maintenance, technical_service
+#: model_terms:ir.ui.view,arch_db:maintenance.hr_equipment_request_view_kanban
+#: model_terms:ir.ui.view,arch_db:maintenance.hr_equipment_view_kanban
+#: model_terms:ir.ui.view,arch_db:technical_service.devices_kanban_view
+msgid "Dropdown menu"
+msgstr ""
+
+#. modules: maintenance, technical_service
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_request__duration
+#: code:addons/technical_service/models/models.py:188
+#: model:ir.model.fields,field_description:technical_service.field_technical_service_request__duration
+#: model:ir.model.fields,field_description:technical_service.field_technical_service_request_duration__duration
+#, python-format
+msgid "Duration"
+msgstr ""
+
+#. modules: maintenance, technical_service
+#: model:ir.model.fields,help:maintenance.field_maintenance_request__duration
+#: model:ir.model.fields,help:technical_service.field_technical_service_request__duration
+#: model:ir.model.fields,help:technical_service.field_technical_service_request_duration__duration
+msgid "Duration in minutes and seconds."
+msgstr ""
+
+#. modules: maintenance, technical_service
+#: model_terms:ir.ui.view,arch_db:maintenance.hr_equipment_request_view_kanban
+#: model_terms:ir.ui.view,arch_db:maintenance.hr_equipment_view_kanban
+#: model_terms:ir.ui.view,arch_db:technical_service.devices_kanban_view
+msgid "Edit..."
+msgstr ""
+
+#. module: maintenance
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_equipment__effective_date
+msgid "Effective Date"
+msgstr ""
+
+#. module: maintenance
+#: model_terms:ir.ui.view,arch_db:maintenance.hr_equipment_category_view_form
+msgid "Email Alias"
+msgstr ""
+
+#. module: maintenance
+#: model:ir.model.fields,help:maintenance.field_maintenance_equipment_category__alias_id
+msgid "Email alias for this equipment category. New emails will automatically create new maintenance request for this equipment category."
+msgstr ""
+
+#. modules: maintenance, technical_service
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_equipment_category__equipment_count
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_request__equipment_id
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_team__equipment_ids
+#: model:ir.model.fields,field_description:technical_service.field_technical_service_request__equipment_id
+msgid "Equipment"
+msgstr ""
+
+#. module: maintenance
+#: model:mail.message.subtype,description:maintenance.mt_mat_assign
+#: model:mail.message.subtype,name:maintenance.mt_cat_mat_assign
+#: model:mail.message.subtype,name:maintenance.mt_mat_assign
+msgid "Equipment Assigned"
+msgstr ""
+
+#. module: maintenance
+#: model:ir.actions.act_window,name:maintenance.hr_equipment_category_action
+#: model:ir.ui.menu,name:maintenance.menu_maintenance_cat
+#: model_terms:ir.ui.view,arch_db:maintenance.hr_equipment_category_view_form
+msgid "Equipment Categories"
+msgstr ""
+
+#. module: maintenance
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_equipment__category_id
+msgid "Equipment Category"
+msgstr ""
+
+#. module: maintenance
+#: model:res.groups,name:maintenance.group_equipment_manager
+msgid "Equipment Manager"
+msgstr ""
+
+#. module: maintenance
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_equipment__name
+#: model_terms:ir.ui.view,arch_db:maintenance.hr_equipment_view_form
+msgid "Equipment Name"
+msgstr ""
+
+#. module: maintenance
+#: model:ir.actions.act_window,name:maintenance.hr_equipment_action
+#: model:ir.actions.act_window,name:maintenance.hr_equipment_action_from_category_form
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_equipment_category__equipment_ids
+#: model:ir.ui.menu,name:maintenance.menu_equipment_form
+#: model_terms:ir.ui.view,arch_db:maintenance.hr_equipment_category_view_form
+#: model_terms:ir.ui.view,arch_db:maintenance.hr_equipment_view_form
+msgid "Equipments"
+msgstr ""
+
+#. module: technical_service
+#: code:addons/technical_service/models/models.py:133
+#, python-format
+msgid "Fill Requirements"
+msgstr ""
+
+#. module: maintenance
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_equipment_category__fold
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_stage__fold
+msgid "Folded in Maintenance Pipe"
+msgstr ""
+
+#. module: maintenance
+#: model_terms:ir.actions.act_window,help:maintenance.hr_equipment_request_action
+#: model_terms:ir.actions.act_window,help:maintenance.hr_equipment_request_action_cal
+#: model_terms:ir.actions.act_window,help:maintenance.hr_equipment_request_action_from_equipment
+#: model_terms:ir.actions.act_window,help:maintenance.hr_equipment_request_action_link
+#: model_terms:ir.actions.act_window,help:maintenance.hr_equipment_todo_request_action_from_dashboard
+#: model_terms:ir.actions.act_window,help:maintenance.maintenance_request_action_reports
+msgid "Follow the process of the request and communicate with the collaborator."
+msgstr ""
+
+#. modules: maintenance, technical_service
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_equipment__message_follower_ids
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_equipment_category__message_follower_ids
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_request__message_follower_ids
+#: model:ir.model.fields,field_description:technical_service.field_technical_service_request__message_follower_ids
+msgid "Followers"
+msgstr ""
+
+#. modules: maintenance, technical_service
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_equipment__message_channel_ids
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_equipment_category__message_channel_ids
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_request__message_channel_ids
+#: model:ir.model.fields,field_description:technical_service.field_technical_service_request__message_channel_ids
+msgid "Followers (Channels)"
+msgstr ""
+
+#. modules: maintenance, technical_service
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_equipment__message_partner_ids
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_equipment_category__message_partner_ids
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_request__message_partner_ids
+#: model:ir.model.fields,field_description:technical_service.field_technical_service_request__message_partner_ids
+msgid "Followers (Partners)"
+msgstr ""
+
+#. module: maintenance
+#: model_terms:ir.ui.view,arch_db:maintenance.hr_equipment_request_view_search
+#: model_terms:ir.ui.view,arch_db:maintenance.hr_equipment_view_search
+msgid "Future Activities"
+msgstr ""
+
+#. module: technical_service
+#: model_terms:ir.ui.view,arch_db:technical_service.requests_form_view
+#: model_terms:ir.ui.view,arch_db:technical_service.requests_kanban_view
+msgid "Generate Invoice"
+msgstr ""
+
+#. module: technical_service
+#: model_terms:ir.ui.view,arch_db:technical_service.device_search_view
+msgid "Group By"
+msgstr ""
+
+#. module: technical_service
+#: model_terms:ir.ui.view,arch_db:technical_service.request_search_view
+msgid "Group by"
+msgstr ""
+
+#. module: maintenance
+#: model_terms:ir.ui.view,arch_db:maintenance.hr_equipment_category_view_search
+#: model_terms:ir.ui.view,arch_db:maintenance.hr_equipment_request_view_search
+#: model_terms:ir.ui.view,arch_db:maintenance.hr_equipment_view_search
+msgid "Group by..."
+msgstr ""
+
+#. module: technical_service
+#: model:ir.module.category,description:technical_service.technical_service_group_management
+msgid "Helps you manage the Technical Service"
+msgstr ""
+
+#. modules: maintenance, technical_service
+#: selection:maintenance.request,priority:0
+#: selection:technical.service.request,priority:0
+msgid "High"
+msgstr ""
+
+#. modules: maintenance, technical_service
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_equipment__id
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_equipment_category__id
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_request__id
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_stage__id
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_team__id
+#: model:ir.model.fields,field_description:technical_service.field_technical_service_device__id
+#: model:ir.model.fields,field_description:technical_service.field_technical_service_device_category__id
+#: model:ir.model.fields,field_description:technical_service.field_technical_service_request__id
+#: model:ir.model.fields,field_description:technical_service.field_technical_service_request_duration__id
+#: model:ir.model.fields,field_description:technical_service.field_technical_service_team__id
+msgid "ID"
+msgstr ""
+
+#. module: maintenance
+#: model:ir.model.fields,help:maintenance.field_maintenance_equipment_category__alias_parent_thread_id
+msgid "ID of the parent record holding the alias (example: project holding the task creation alias)"
+msgstr ""
+
+#. modules: maintenance, technical_service
+#: model:ir.model.fields,help:maintenance.field_maintenance_equipment__message_unread
+#: model:ir.model.fields,help:maintenance.field_maintenance_equipment_category__message_unread
+#: model:ir.model.fields,help:maintenance.field_maintenance_request__message_unread
+#: model:ir.model.fields,help:technical_service.field_technical_service_request__message_unread
+msgid "If checked new messages require your attention."
+msgstr ""
+
+#. modules: maintenance, technical_service
+#: model:ir.model.fields,help:maintenance.field_maintenance_equipment__message_needaction
+#: model:ir.model.fields,help:maintenance.field_maintenance_equipment_category__message_needaction
+#: model:ir.model.fields,help:maintenance.field_maintenance_request__message_needaction
+#: model:ir.model.fields,help:technical_service.field_technical_service_request__message_needaction
+msgid "If checked, new messages require your attention."
+msgstr ""
+
+#. modules: maintenance, technical_service
+#: model:ir.model.fields,help:maintenance.field_maintenance_equipment__message_has_error
+#: model:ir.model.fields,help:maintenance.field_maintenance_equipment_category__message_has_error
+#: model:ir.model.fields,help:maintenance.field_maintenance_request__message_has_error
+#: model:ir.model.fields,help:technical_service.field_technical_service_request__message_has_error
+msgid "If checked, some messages have a delivery error."
+msgstr ""
+
+#. module: technical_service
+#: model_terms:ir.ui.view,arch_db:technical_service.duration_wizard
+msgid "If not, please indicate here the amount of time spent:"
+msgstr ""
+
+#. module: technical_service
+#: model:ir.model.fields,field_description:technical_service.field_technical_service_device__photo
+msgid "Image"
+msgstr ""
+
+#. modules: maintenance, technical_service
+#: model_terms:ir.ui.view,arch_db:maintenance.hr_equipment_request_view_search
+#: model_terms:ir.ui.view,arch_db:maintenance.maintenance_team_kanban
+#: selection:maintenance.request,kanban_state:0
+#: selection:technical.service.request,kanban_state:0
+msgid "In Progress"
+msgstr ""
+
+#. module: maintenance
+#: model:maintenance.team,name:maintenance.equipment_team_maintenance
+msgid "Internal Maintenance"
+msgstr ""
+
+#. modules: maintenance, technical_service
+#: model_terms:ir.ui.view,arch_db:maintenance.hr_equipment_request_view_form
+#: model_terms:ir.ui.view,arch_db:technical_service.requests_form_view
+msgid "Internal Note ......."
+msgstr ""
+
+#. module: technical_service
+#: model:ir.actions.act_window,name:technical_service.invoice_see_action
+#: model:ir.model.fields,field_description:technical_service.field_technical_service_request__invoice_id
+msgid "Invoice"
+msgstr ""
+
+#. module: technical_service
+#: model:ir.model,name:technical_service.model_account_invoice_line
+msgid "Invoice Line"
+msgstr ""
+
+#. module: technical_service
+#: model:maintenance.stage,name:technical_service.stage_6
+msgid "Invoiced"
+msgstr ""
+
+#. modules: maintenance, technical_service
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_equipment__message_is_follower
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_equipment_category__message_is_follower
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_request__message_is_follower
+#: model:ir.model.fields,field_description:technical_service.field_technical_service_request__message_is_follower
+msgid "Is Follower"
+msgstr ""
+
+#. modules: maintenance, technical_service
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_request__kanban_state
+#: model:ir.model.fields,field_description:technical_service.field_technical_service_request__kanban_state
+msgid "Kanban State"
+msgstr ""
+
+#. modules: maintenance, technical_service
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_equipment____last_update
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_equipment_category____last_update
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_request____last_update
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_stage____last_update
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_team____last_update
+#: model:ir.model.fields,field_description:technical_service.field_technical_service_device____last_update
+#: model:ir.model.fields,field_description:technical_service.field_technical_service_device_category____last_update
+#: model:ir.model.fields,field_description:technical_service.field_technical_service_request____last_update
+#: model:ir.model.fields,field_description:technical_service.field_technical_service_request_duration____last_update
+#: model:ir.model.fields,field_description:technical_service.field_technical_service_team____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. modules: maintenance, technical_service
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_equipment__write_uid
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_equipment_category__write_uid
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_request__write_uid
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_stage__write_uid
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_team__write_uid
+#: model:ir.model.fields,field_description:technical_service.field_technical_service_device__write_uid
+#: model:ir.model.fields,field_description:technical_service.field_technical_service_device_category__write_uid
+#: model:ir.model.fields,field_description:technical_service.field_technical_service_request__write_uid
+#: model:ir.model.fields,field_description:technical_service.field_technical_service_request_duration__write_uid
+#: model:ir.model.fields,field_description:technical_service.field_technical_service_team__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. modules: maintenance, technical_service
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_equipment__write_date
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_equipment_category__write_date
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_request__write_date
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_stage__write_date
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_team__write_date
+#: model:ir.model.fields,field_description:technical_service.field_technical_service_device__write_date
+#: model:ir.model.fields,field_description:technical_service.field_technical_service_device_category__write_date
+#: model:ir.model.fields,field_description:technical_service.field_technical_service_request__write_date
+#: model:ir.model.fields,field_description:technical_service.field_technical_service_request_duration__write_date
+#: model:ir.model.fields,field_description:technical_service.field_technical_service_team__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: maintenance
+#: model_terms:ir.ui.view,arch_db:maintenance.hr_equipment_request_view_search
+#: model_terms:ir.ui.view,arch_db:maintenance.hr_equipment_view_search
+msgid "Late Activities"
+msgstr ""
+
+#. module: maintenance
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_equipment__location
+msgid "Location"
+msgstr ""
+
+#. module: maintenance
+#: model:ir.ui.menu,name:maintenance.menu_m_reports_losses
+msgid "Losses Analysis"
+msgstr ""
+
+#. modules: maintenance, technical_service
+#: selection:maintenance.request,priority:0
+#: selection:technical.service.request,priority:0
+msgid "Low"
+msgstr ""
+
+#. modules: maintenance, technical_service
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_equipment__message_main_attachment_id
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_equipment_category__message_main_attachment_id
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_request__message_main_attachment_id
+#: model:ir.model.fields,field_description:technical_service.field_technical_service_request__message_main_attachment_id
+msgid "Main Attachment"
+msgstr ""
+
+#. module: technical_service
+#: model:ir.model,name:technical_service.model_technical_service_request
+msgid "Main body of a Tecnical Service Request, also used in the Kanban view."
+msgstr ""
+
+#. module: maintenance
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_equipment__maintenance_ids
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_equipment_category__maintenance_ids
+#: model:ir.ui.menu,name:maintenance.menu_m_request
+#: model:ir.ui.menu,name:maintenance.menu_maintenance_title
+#: model_terms:ir.ui.view,arch_db:maintenance.hr_equipment_category_view_form
+#: model_terms:ir.ui.view,arch_db:maintenance.hr_equipment_view_form
+msgid "Maintenance"
+msgstr ""
+
+#. module: maintenance
+#: model:ir.ui.menu,name:maintenance.menu_m_request_calendar
+msgid "Maintenance Calendar"
+msgstr ""
+
+#. module: maintenance
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_equipment__maintenance_count
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_equipment_category__maintenance_count
+msgid "Maintenance Count"
+msgstr ""
+
+#. module: maintenance
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_equipment__maintenance_duration
+#: model_terms:ir.ui.view,arch_db:maintenance.hr_equipment_view_form
+msgid "Maintenance Duration"
+msgstr ""
+
+#. module: maintenance
+#: model:ir.model.fields,help:maintenance.field_maintenance_equipment__maintenance_duration
+msgid "Maintenance Duration in hours."
+msgstr ""
+
+#. module: maintenance
+#: model:ir.model,name:maintenance.model_maintenance_equipment
+msgid "Maintenance Equipment"
+msgstr ""
+
+#. module: maintenance
+#: model:ir.model,name:maintenance.model_maintenance_equipment_category
+msgid "Maintenance Equipment Category"
+msgstr ""
+
+#. modules: maintenance, technical_service
+#: model:ir.model,name:maintenance.model_maintenance_request
+#: model_terms:ir.ui.view,arch_db:maintenance.hr_equipment_request_view_form
+#: model:mail.activity.type,name:maintenance.mail_act_maintenance_request
+#: model_terms:ir.ui.view,arch_db:technical_service.requests_form_view
+msgid "Maintenance Request"
+msgstr ""
+
+#. module: maintenance
+#: model:mail.message.subtype,name:maintenance.mt_cat_req_created
+msgid "Maintenance Request Created"
+msgstr ""
+
+#. module: maintenance
+#: model_terms:ir.ui.view,arch_db:maintenance.hr_equipment_stage_view_tree
+msgid "Maintenance Request Stage"
+msgstr ""
+
+#. module: maintenance
+#: model_terms:ir.ui.view,arch_db:maintenance.hr_equipment_stage_view_search
+msgid "Maintenance Request Stages"
+msgstr ""
+
+#. module: maintenance
+#: model:mail.message.subtype,description:maintenance.mt_req_created
+msgid "Maintenance Request created"
+msgstr ""
+
+#. module: maintenance
+#: model:ir.actions.act_window,name:maintenance.hr_equipment_request_action
+#: model:ir.actions.act_window,name:maintenance.hr_equipment_request_action_cal
+#: model:ir.actions.act_window,name:maintenance.hr_equipment_request_action_from_equipment
+#: model:ir.actions.act_window,name:maintenance.hr_equipment_request_action_link
+#: model:ir.actions.act_window,name:maintenance.hr_equipment_todo_request_action_from_dashboard
+#: model:ir.actions.act_window,name:maintenance.maintenance_request_action_reports
+#: model:ir.ui.menu,name:maintenance.maintenance_request_reporting
+#: model:ir.ui.menu,name:maintenance.menu_m_request_form
+#: model_terms:ir.ui.view,arch_db:maintenance.maintenance_team_kanban
+msgid "Maintenance Requests"
+msgstr ""
+
+#. module: maintenance
+#: model:ir.model,name:maintenance.model_maintenance_stage
+msgid "Maintenance Stage"
+msgstr ""
+
+#. module: maintenance
+#: model:ir.ui.menu,name:maintenance.menu_maintenance_stage_configuration
+msgid "Maintenance Stages"
+msgstr ""
+
+#. module: maintenance
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_equipment__maintenance_team_id
+#: model_terms:ir.ui.view,arch_db:maintenance.maintenance_team_view_form
+#: model_terms:ir.ui.view,arch_db:maintenance.maintenance_team_view_tree
+msgid "Maintenance Team"
+msgstr ""
+
+#. module: maintenance
+#: model:ir.actions.act_window,name:maintenance.maintenance_dashboard_action
+#: model:ir.model,name:maintenance.model_maintenance_team
+#: model:ir.ui.menu,name:maintenance.menu_maintenance_teams
+msgid "Maintenance Teams"
+msgstr ""
+
+#. modules: maintenance, technical_service
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_request__maintenance_type
+#: model:ir.model.fields,field_description:technical_service.field_technical_service_request__maintenance_type
+msgid "Maintenance Type"
+msgstr ""
+
+#. module: maintenance
+#: model:ir.actions.server,name:maintenance.maintenance_requests_cron_ir_actions_server
+#: model:ir.cron,cron_name:maintenance.maintenance_requests_cron
+#: model:ir.cron,name:maintenance.maintenance_requests_cron
+msgid "Maintenance: generate preventive maintenance requests"
+msgstr ""
+
+#. module: technical_service
+#: model:ir.model.fields,field_description:technical_service.field_technical_service_device__image_medium
+msgid "Medium-sized image"
+msgstr ""
+
+#. module: technical_service
+#: model:ir.model.fields,field_description:technical_service.field_technical_service_team__member_ids
+msgid "Members"
+msgstr ""
+
+#. modules: maintenance, technical_service
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_equipment__message_has_error
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_equipment_category__message_has_error
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_request__message_has_error
+#: model:ir.model.fields,field_description:technical_service.field_technical_service_request__message_has_error
+msgid "Message Delivery error"
+msgstr ""
+
+#. modules: maintenance, technical_service
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_equipment__message_ids
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_equipment_category__message_ids
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_request__message_ids
+#: model:ir.model.fields,field_description:technical_service.field_technical_service_request__message_ids
+msgid "Messages"
+msgstr ""
+
+#. modules: maintenance, technical_service
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_equipment__model
+#: model:ir.model.fields,field_description:technical_service.field_technical_service_device__name
+msgid "Model"
+msgstr ""
+
+#. module: maintenance
+#: model_terms:ir.ui.view,arch_db:maintenance.hr_equipment_request_view_search
+#: model_terms:ir.ui.view,arch_db:maintenance.hr_equipment_view_search
+msgid "My Activities"
+msgstr ""
+
+#. module: maintenance
+#: model_terms:ir.ui.view,arch_db:maintenance.hr_equipment_view_search
+msgid "My Equipments"
+msgstr ""
+
+#. module: maintenance
+#: model_terms:ir.ui.view,arch_db:maintenance.hr_equipment_request_view_search
+msgid "My Requests"
+msgstr ""
+
+#. modules: maintenance, technical_service
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_stage__name
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_team__name
+#: model_terms:ir.ui.view,arch_db:maintenance.hr_equipment_category_view_tree
+#: model_terms:ir.ui.view,arch_db:maintenance.hr_equipment_request_view_form
+#: model_terms:ir.ui.view,arch_db:maintenance.hr_equipment_view_form
+#: model:ir.model.fields,field_description:technical_service.field_technical_service_team__name
+#: model_terms:ir.ui.view,arch_db:technical_service.devices_category_form_view
+#: model_terms:ir.ui.view,arch_db:technical_service.requests_form_view
+#: model_terms:ir.ui.view,arch_db:technical_service.teams_form_view
+msgid "Name"
+msgstr ""
+
+#. module: maintenance
+#: model:maintenance.stage,name:maintenance.stage_0
+msgid "New Request"
+msgstr ""
+
+#. modules: maintenance, technical_service
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_equipment__activity_date_deadline
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_request__activity_date_deadline
+#: model:ir.model.fields,field_description:technical_service.field_technical_service_request__activity_date_deadline
+msgid "Next Activity Deadline"
+msgstr ""
+
+#. modules: maintenance, technical_service
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_equipment__activity_summary
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_request__activity_summary
+#: model:ir.model.fields,field_description:technical_service.field_technical_service_request__activity_summary
+msgid "Next Activity Summary"
+msgstr ""
+
+#. modules: maintenance, technical_service
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_equipment__activity_type_id
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_request__activity_type_id
+#: model:ir.model.fields,field_description:technical_service.field_technical_service_request__activity_type_id
+msgid "Next Activity Type"
+msgstr ""
+
+#. module: maintenance
+#: model_terms:ir.ui.view,arch_db:maintenance.hr_equipment_view_form
+msgid "Next Preventive Maintenance"
+msgstr ""
+
+#. modules: maintenance, technical_service
+#: selection:maintenance.request,priority:0
+#: selection:technical.service.request,priority:0
+msgid "Normal"
+msgstr ""
+
+#. module: maintenance
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_equipment__note
+msgid "Note"
+msgstr ""
+
+#. module: technical_service
+#: model:ir.model.fields,field_description:technical_service.field_technical_service_device__notes
+#: model_terms:ir.ui.view,arch_db:technical_service.devices_form_view
+msgid "Notes"
+msgstr ""
+
+#. modules: maintenance, technical_service
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_equipment__message_needaction_counter
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_equipment_category__message_needaction_counter
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_request__message_needaction_counter
+#: model:ir.model.fields,field_description:technical_service.field_technical_service_request__message_needaction_counter
+msgid "Number of Actions"
+msgstr ""
+
+#. module: maintenance
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_team__todo_request_count
+msgid "Number of Requests"
+msgstr ""
+
+#. module: maintenance
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_team__todo_request_count_block
+msgid "Number of Requests Blocked"
+msgstr ""
+
+#. module: maintenance
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_team__todo_request_count_date
+msgid "Number of Requests Scheduled"
+msgstr ""
+
+#. module: maintenance
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_team__todo_request_count_unscheduled
+msgid "Number of Requests Unscheduled"
+msgstr ""
+
+#. module: maintenance
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_team__todo_request_count_high_priority
+msgid "Number of Requests in High Priority"
+msgstr ""
+
+#. modules: maintenance, technical_service
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_equipment__message_has_error_counter
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_equipment_category__message_has_error_counter
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_request__message_has_error_counter
+#: model:ir.model.fields,field_description:technical_service.field_technical_service_request__message_has_error_counter
+msgid "Number of error"
+msgstr ""
+
+#. modules: maintenance, technical_service
+#: model:ir.model.fields,help:maintenance.field_maintenance_equipment__message_needaction_counter
+#: model:ir.model.fields,help:maintenance.field_maintenance_equipment_category__message_needaction_counter
+#: model:ir.model.fields,help:maintenance.field_maintenance_request__message_needaction_counter
+#: model:ir.model.fields,help:technical_service.field_technical_service_request__message_needaction_counter
+msgid "Number of messages which requires an action"
+msgstr ""
+
+#. modules: maintenance, technical_service
+#: model:ir.model.fields,help:maintenance.field_maintenance_equipment__message_has_error_counter
+#: model:ir.model.fields,help:maintenance.field_maintenance_equipment_category__message_has_error_counter
+#: model:ir.model.fields,help:maintenance.field_maintenance_request__message_has_error_counter
+#: model:ir.model.fields,help:technical_service.field_technical_service_request__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr ""
+
+#. modules: maintenance, technical_service
+#: model:ir.model.fields,help:maintenance.field_maintenance_equipment__message_unread_counter
+#: model:ir.model.fields,help:maintenance.field_maintenance_equipment_category__message_unread_counter
+#: model:ir.model.fields,help:maintenance.field_maintenance_request__message_unread_counter
+#: model:ir.model.fields,help:technical_service.field_technical_service_request__message_unread_counter
+msgid "Number of unread messages"
+msgstr ""
+
+#. module: technical_service
+#: model_terms:ir.ui.view,arch_db:technical_service.requests_form_view
+msgid "Operation"
+msgstr ""
+
+#. module: maintenance
+#: model:ir.model.fields,help:maintenance.field_maintenance_equipment_category__alias_force_thread_id
+msgid "Optional ID of a thread (record) to which all incoming messages will be attached, even if they did not reply to it. If set, this will disable the creation of new records completely."
+msgstr ""
+
+#. module: technical_service
+#: model_terms:ir.ui.view,arch_db:technical_service.res_users_inherited_view
+msgid "Other Applications"
+msgstr ""
+
+#. module: technical_service
+#: model:ir.model.fields,field_description:technical_service.field_technical_service_request__our_companies
+msgid "Our Companies"
+msgstr ""
+
+#. module: maintenance
+#: model:ir.ui.menu,name:maintenance.menu_m_reports_oee
+msgid "Overall Equipment Effectiveness (OEE)"
+msgstr ""
+
+#. modules: maintenance, technical_service
+#: selection:maintenance.equipment,activity_state:0
+#: selection:maintenance.request,activity_state:0
+#: selection:technical.service.request,activity_state:0
+msgid "Overdue"
+msgstr ""
+
+#. module: maintenance
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_equipment__owner_user_id
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_equipment_category__alias_user_id
+#: model_terms:ir.ui.view,arch_db:maintenance.hr_equipment_view_form
+#: model_terms:ir.ui.view,arch_db:maintenance.hr_equipment_view_search
+#: model_terms:ir.ui.view,arch_db:maintenance.hr_equipment_view_tree
+msgid "Owner"
+msgstr ""
+
+#. module: maintenance
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_equipment_category__alias_parent_model_id
+msgid "Parent Model"
+msgstr ""
+
+#. module: maintenance
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_equipment_category__alias_parent_thread_id
+msgid "Parent Record Thread ID"
+msgstr ""
+
+#. module: maintenance
+#: model:ir.model.fields,help:maintenance.field_maintenance_equipment_category__alias_parent_model_id
+msgid "Parent model holding the alias. The model holding the alias reference is not necessarily the model given by alias_model_id (example: project (parent_model) and task (model))"
+msgstr ""
+
+#. modules: maintenance, technical_service
+#: selection:maintenance.equipment,activity_state:0
+#: selection:maintenance.request,activity_state:0
+#: selection:technical.service.request,activity_state:0
+msgid "Planned"
+msgstr ""
+
+#. module: technical_service
+#: code:addons/technical_service/models/models.py:195
+#: code:addons/technical_service/models/models.py:213
+#: code:addons/technical_service/models/models.py:226
+#: code:addons/technical_service/models/models.py:239
+#: code:addons/technical_service/models/models.py:252
+#, python-format
+msgid "Please, click the 'Requirements' button to fill all the details."
+msgstr ""
+
+#. module: maintenance
+#: model:ir.model.fields,help:maintenance.field_maintenance_equipment_category__alias_contact
+msgid "Policy to post a message on the document using the mailgateway.\n"
+"- everyone: everyone can post\n"
+"- partners: only authenticated partners\n"
+"- followers: only followers of the related document or members of following channels\n"
+""
+msgstr ""
+
+#. modules: maintenance, technical_service
+#: selection:maintenance.request,maintenance_type:0
+#: selection:technical.service.request,maintenance_type:0
+msgid "Preventive"
+msgstr ""
+
+#. module: maintenance
+#: code:addons/maintenance/models/maintenance.py:231
+#, python-format
+msgid "Preventive Maintenance - %s"
+msgstr ""
+
+#. module: maintenance
+#: model_terms:ir.ui.view,arch_db:maintenance.hr_equipment_view_form
+msgid "Preventive Maintenance Frequency"
+msgstr ""
+
+#. modules: maintenance, technical_service
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_request__priority
+#: model:ir.model.fields,field_description:technical_service.field_technical_service_request__priority
+msgid "Priority"
+msgstr ""
+
+#. module: maintenance
+#: model_terms:ir.ui.view,arch_db:maintenance.hr_equipment_view_form
+msgid "Product Information"
+msgstr ""
+
+#. module: technical_service
+#: model:ir.model.fields,field_description:technical_service.field_technical_service_team__rate
+msgid "Rate"
+msgstr ""
+
+#. modules: maintenance, technical_service
+#: selection:maintenance.request,kanban_state:0
+#: selection:technical.service.request,kanban_state:0
+msgid "Ready for next stage"
+msgstr ""
+
+#. module: maintenance
+#: model_terms:ir.ui.view,arch_db:maintenance.hr_equipment_view_kanban
+msgid "Record Colour"
+msgstr ""
+
+#. module: maintenance
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_equipment_category__alias_force_thread_id
+msgid "Record Thread ID"
+msgstr ""
+
+#. module: technical_service
+#: model:ir.model.fields,field_description:technical_service.field_technical_service_request__related_company_id
+msgid "Related Company"
+msgstr ""
+
+#. modules: maintenance, technical_service
+#: model_terms:ir.ui.view,arch_db:maintenance.hr_equipment_request_view_form
+#: model_terms:ir.ui.view,arch_db:technical_service.requests_form_view
+msgid "Reopen Request"
+msgstr ""
+
+#. module: maintenance
+#: model:maintenance.stage,name:maintenance.stage_4
+msgid "Repaired"
+msgstr ""
+
+#. module: technical_service
+#: model_terms:ir.ui.view,arch_db:technical_service.requests_form_view
+msgid "Replacement"
+msgstr ""
+
+#. module: technical_service
+#: model_terms:ir.ui.view,arch_db:technical_service.requests_form_view
+msgid "Replacements"
+msgstr ""
+
+#. module: maintenance
+#: model:ir.ui.menu,name:maintenance.maintenance_reporting
+#: model:ir.ui.menu,name:maintenance.menu_m_reports
+msgid "Reporting"
+msgstr ""
+
+#. module: technical_service
+#: model:ir.model,name:technical_service.model_technical_service_device
+msgid "Representation of an optional device to by fixed"
+msgstr ""
+
+#. modules: maintenance, technical_service
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_team__request_ids
+#: model_terms:ir.ui.view,arch_db:maintenance.hr_equipment_view_kanban
+#: model:ir.model.fields,field_description:technical_service.field_technical_service_team__request_ids
+msgid "Request"
+msgstr ""
+
+#. module: maintenance
+#: model:mail.message.subtype,name:maintenance.mt_req_created
+msgid "Request Created"
+msgstr ""
+
+#. modules: maintenance, technical_service
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_request__request_date
+#: model:ir.model.fields,field_description:technical_service.field_technical_service_request__request_date
+msgid "Request Date"
+msgstr ""
+
+#. module: maintenance
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_stage__done
+msgid "Request Done"
+msgstr ""
+
+#. module: maintenance
+#: code:addons/maintenance/models/maintenance.py:375
+#, python-format
+msgid "Request planned for <a href=\"#\" data-oe-model=\"%s\" data-oe-id=\"%s\">%s</a>"
+msgstr ""
+
+#. modules: maintenance, technical_service
+#: model_terms:ir.ui.view,arch_db:maintenance.hr_equipment_request_view_form
+#: model_terms:ir.ui.view,arch_db:technical_service.requests_form_view
+msgid "Requested By"
+msgstr ""
+
+#. module: maintenance
+#: model_terms:ir.ui.view,arch_db:maintenance.hr_equipment_request_view_kanban
+msgid "Requested by :"
+msgstr ""
+
+#. modules: maintenance, technical_service
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_team__todo_request_ids
+#: model:ir.ui.menu,name:technical_service.technical_service_requests
+#: model_terms:ir.ui.view,arch_db:technical_service.teams_form_view
+msgid "Requests"
+msgstr ""
+
+#. module: technical_service
+#: model:ir.model.fields,field_description:technical_service.field_technical_service_request__invoice_line_ids
+#: model:ir.model.fields,field_description:technical_service.field_technical_service_request__requirements
+#: model_terms:ir.ui.view,arch_db:technical_service.requests_form_view
+#: model_terms:ir.ui.view,arch_db:technical_service.requests_kanban_view
+msgid "Requirements"
+msgstr ""
+
+#. modules: maintenance, technical_service
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_equipment_category__technician_user_id
+#: model_terms:ir.ui.view,arch_db:maintenance.hr_equipment_category_view_search
+#: model_terms:ir.ui.view,arch_db:maintenance.hr_equipment_request_view_form
+#: model_terms:ir.ui.view,arch_db:technical_service.requests_form_view
+msgid "Responsible"
+msgstr ""
+
+#. modules: maintenance, technical_service
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_equipment__activity_user_id
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_request__activity_user_id
+#: model:ir.model.fields,field_description:technical_service.field_technical_service_request__activity_user_id
+msgid "Responsible User"
+msgstr ""
+
+#. module: maintenance
+#: model_terms:ir.ui.view,arch_db:maintenance.maintenance_team_kanban
+#: model:maintenance.stage,name:maintenance.stage_1
+msgid "Scheduled"
+msgstr ""
+
+#. modules: maintenance, technical_service
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_request__schedule_date
+#: code:addons/technical_service/models/models.py:189
+#: model:ir.model.fields,field_description:technical_service.field_technical_service_request__schedule_date
+#: model:ir.model.fields,field_description:technical_service.field_technical_service_request_duration__schedule_date
+#, python-format
+msgid "Scheduled Date"
+msgstr ""
+
+#. module: technical_service
+#: model:maintenance.stage,name:technical_service.stage_5
+msgid "Scrap"
+msgstr ""
+
+#. module: maintenance
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_equipment__scrap_date
+msgid "Scrap Date"
+msgstr ""
+
+#. module: maintenance
+#: model_terms:ir.ui.view,arch_db:maintenance.hr_equipment_category_view_search
+#: model_terms:ir.ui.view,arch_db:maintenance.hr_equipment_view_search
+#: model_terms:ir.ui.view,arch_db:maintenance.maintenance_team_view_search
+msgid "Search"
+msgstr ""
+
+#. modules: maintenance, technical_service
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_stage__sequence
+#: model:ir.model.fields,field_description:technical_service.field_technical_service_request__stage_sequence
+msgid "Sequence"
+msgstr ""
+
+#. module: technical_service
+#: model:ir.model.fields,field_description:technical_service.field_technical_service_device__serial_code
+msgid "Serial Code"
+msgstr ""
+
+#. module: maintenance
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_equipment__serial_no
+msgid "Serial Number"
+msgstr ""
+
+#. module: technical_service
+#: code:addons/technical_service/models/models.py:264
+#, python-format
+msgid "Service Hours"
+msgstr ""
+
+#. module: technical_service
+#: model:res.groups,name:technical_service.group_technical_service_manager
+msgid "Service Manager"
+msgstr ""
+
+#. module: technical_service
+#: model:res.groups,name:technical_service.group_technical_service_team
+msgid "Service Team"
+msgstr ""
+
+#. module: technical_service
+#: model:ir.model.fields,help:technical_service.field_technical_service_team__rate
+msgid "Service rate per hour"
+msgstr ""
+
+#. modules: maintenance, technical_service
+#: model:ir.model.fields,help:maintenance.field_maintenance_request__archive
+#: model:ir.model.fields,help:technical_service.field_technical_service_request__archive
+msgid "Set archive to true to hide the maintenance request without deleting it."
+msgstr ""
+
+#. module: maintenance
+#: model_terms:ir.ui.view,arch_db:maintenance.maintenance_team_kanban
+msgid "Settings"
+msgstr ""
+
+#. module: maintenance
+#: model_terms:ir.ui.view,arch_db:maintenance.hr_equipment_request_view_search
+#: model_terms:ir.ui.view,arch_db:maintenance.hr_equipment_view_search
+msgid "Show all records which has next action date is before today"
+msgstr ""
+
+#. module: technical_service
+#: model:ir.model.fields,field_description:technical_service.field_technical_service_device__image_small
+msgid "Small-sized image"
+msgstr ""
+
+#. module: technical_service
+#: code:addons/technical_service/models/models.py:255
+#, python-format
+msgid "Sorry, to mark this sertvice as Inoiced you must before create the Invoice."
+msgstr ""
+
+#. modules: maintenance, technical_service
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_request__stage_id
+#: model:ir.model.fields,field_description:technical_service.field_technical_service_request__stage_id
+msgid "Stage"
+msgstr ""
+
+#. module: maintenance
+#: model:ir.actions.act_window,name:maintenance.hr_equipment_stage_action
+#: model_terms:ir.ui.view,arch_db:maintenance.hr_equipment_request_view_search
+msgid "Stages"
+msgstr ""
+
+#. module: maintenance
+#: model:mail.message.subtype,name:maintenance.mt_req_status
+msgid "Status Changed"
+msgstr ""
+
+#. modules: maintenance, technical_service
+#: model:ir.model.fields,help:maintenance.field_maintenance_equipment__activity_state
+#: model:ir.model.fields,help:maintenance.field_maintenance_request__activity_state
+#: model:ir.model.fields,help:technical_service.field_technical_service_request__activity_state
+msgid "Status based on activities\n"
+"Overdue: Due date is already passed\n"
+"Today: Activity date is today\n"
+"Planned: Future activities."
+msgstr ""
+
+#. module: maintenance
+#: model:mail.message.subtype,description:maintenance.mt_req_status
+msgid "Status changed"
+msgstr ""
+
+#. modules: maintenance, technical_service
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_request__name
+#: model:ir.model.fields,field_description:technical_service.field_technical_service_request__name
+msgid "Subjects"
+msgstr ""
+
+#. modules: maintenance, technical_service
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_request__maintenance_team_id
+#: model:ir.model.fields,field_description:technical_service.field_technical_service_request__maintenance_team_id
+#: model_terms:ir.ui.view,arch_db:technical_service.request_search_view
+msgid "Team"
+msgstr ""
+
+#. modules: maintenance, technical_service
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_team__member_ids
+#: model_terms:ir.ui.view,arch_db:technical_service.teams_form_view
+msgid "Team Members"
+msgstr ""
+
+#. module: maintenance
+#: model_terms:ir.ui.view,arch_db:maintenance.maintenance_team_view_form
+msgid "Team Name"
+msgstr ""
+
+#. modules: maintenance, technical_service
+#: model:ir.actions.act_window,name:maintenance.maintenance_team_action_settings
+#: model:ir.actions.act_window,name:technical_service.teams_action
+#: model:ir.ui.menu,name:technical_service.technical_service_teams
+msgid "Teams"
+msgstr ""
+
+#. module: technical_service
+#: model:ir.model.fields,field_description:technical_service.field_account_invoice_line__technical_request
+msgid "Technical Request"
+msgstr ""
+
+#. module: technical_service
+#: model:ir.module.category,name:technical_service.technical_service_group_management
+#: model:ir.ui.menu,name:technical_service.technical_service_main
+msgid "Technical Service"
+msgstr ""
+
+#. module: technical_service
+#: model:ir.actions.act_window,name:technical_service.requests_action
+msgid "Technical Service Requests"
+msgstr ""
+
+#. module: technical_service
+#: model:ir.model,name:technical_service.model_technical_service_team
+msgid "Technical Service Teams"
+msgstr ""
+
+#. module: technical_service
+#: model:ir.model.fields,field_description:technical_service.field_res_users__technical_team_id
+#: model:ir.model.fields,field_description:technical_service.field_technical_service_request__technical_team
+msgid "Technical Team"
+msgstr ""
+
+#. modules: maintenance, technical_service
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_equipment__technician_user_id
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_request__user_id
+#: model:ir.model.fields,field_description:technical_service.field_technical_service_request__user_id
+msgid "Technician"
+msgstr ""
+
+#. module: maintenance
+#: model_terms:ir.ui.view,arch_db:maintenance.hr_equipment_view_search
+msgid "Technicians"
+msgstr ""
+
+#. module: technical_service
+#: code:addons/technical_service/models/models.py:69
+#, python-format
+msgid "The 'rate' for this team is too low. Consider increase it, at least at a minimum of 1."
+msgstr ""
+
+#. module: maintenance
+#: model:ir.model.fields,help:maintenance.field_maintenance_equipment_category__alias_model_id
+msgid "The model (Odoo Document Kind) to which this alias corresponds. Any incoming email that does not reply to an existing record will cause the creation of a new record of this model (e.g. a Project Task)"
+msgstr ""
+
+#. module: maintenance
+#: model:ir.model.fields,help:maintenance.field_maintenance_equipment_category__alias_name
+msgid "The name of the email alias, e.g. 'jobs' if you want to catch emails for <jobs@example.odoo.com>"
+msgstr ""
+
+#. module: maintenance
+#: model:ir.model.fields,help:maintenance.field_maintenance_equipment_category__alias_user_id
+msgid "The owner of records created upon receiving emails on this alias. If this field is not set the system will attempt to find the right owner based on the sender (From) address, or will use the Administrator account if no system user is found for that address."
+msgstr ""
+
+#. module: technical_service
+#: code:addons/technical_service/models/models.py:74
+#, python-format
+msgid "The rate is still quite low"
+msgstr ""
+
+#. module: maintenance
+#: model:res.groups,comment:maintenance.group_equipment_manager
+msgid "The user will be able to manage equipments."
+msgstr ""
+
+#. module: technical_service
+#: model:ir.model.fields,help:technical_service.field_technical_service_device__photo
+msgid "This field holds the image used as avatar for this contact, limited to 1024x1024px"
+msgstr ""
+
+#. modules: maintenance, technical_service
+#: model:maintenance.stage,name:maintenance.stage_3
+#: model_terms:ir.ui.view,arch_db:technical_service.requests_form_view
+msgid "Time & Replacements"
+msgstr ""
+
+#. module: maintenance
+#: model_terms:ir.ui.view,arch_db:maintenance.maintenance_team_kanban
+msgid "To Do"
+msgstr ""
+
+#. module: maintenance
+#: model_terms:ir.ui.view,arch_db:maintenance.hr_equipment_request_view_search
+msgid "To do"
+msgstr ""
+
+#. modules: maintenance, technical_service
+#: selection:maintenance.equipment,activity_state:0
+#: selection:maintenance.request,activity_state:0
+#: selection:technical.service.request,activity_state:0
+msgid "Today"
+msgstr ""
+
+#. module: maintenance
+#: model_terms:ir.ui.view,arch_db:maintenance.hr_equipment_request_view_search
+#: model_terms:ir.ui.view,arch_db:maintenance.hr_equipment_view_search
+msgid "Today Activities"
+msgstr ""
+
+#. module: maintenance
+#: model_terms:ir.ui.view,arch_db:maintenance.hr_equipment_request_view_search
+#: model_terms:ir.ui.view,arch_db:maintenance.maintenance_team_kanban
+msgid "Top Priorities"
+msgstr ""
+
+#. module: maintenance
+#: model_terms:ir.actions.act_window,help:maintenance.hr_equipment_action
+#: model_terms:ir.actions.act_window,help:maintenance.hr_equipment_action_from_category_form
+msgid "Track equipments and link it to an employee or department.\n"
+"                You will be able to manage allocations, issues and maintenance of your equipment."
+msgstr ""
+
+#. module: maintenance
+#: model_terms:ir.ui.view,arch_db:maintenance.hr_equipment_view_search
+msgid "Under Maintenance"
+msgstr ""
+
+#. modules: maintenance, technical_service
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_equipment__message_unread
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_equipment_category__message_unread
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_request__message_unread
+#: model_terms:ir.ui.view,arch_db:maintenance.hr_equipment_request_view_kanban
+#: model_terms:ir.ui.view,arch_db:maintenance.hr_equipment_request_view_search
+#: model_terms:ir.ui.view,arch_db:maintenance.hr_equipment_view_search
+#: model:ir.model.fields,field_description:technical_service.field_technical_service_request__message_unread
+msgid "Unread Messages"
+msgstr ""
+
+#. modules: maintenance, technical_service
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_equipment__message_unread_counter
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_equipment_category__message_unread_counter
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_request__message_unread_counter
+#: model:ir.model.fields,field_description:technical_service.field_technical_service_request__message_unread_counter
+msgid "Unread Messages Counter"
+msgstr ""
+
+#. module: maintenance
+#: model_terms:ir.ui.view,arch_db:maintenance.maintenance_team_kanban
+msgid "Unscheduled"
+msgstr ""
+
+#. module: maintenance
+#: model_terms:ir.ui.view,arch_db:maintenance.hr_equipment_request_view_search
+msgid "Unscheduled Maintenance"
+msgstr ""
+
+#. module: maintenance
+#: model_terms:ir.ui.view,arch_db:maintenance.hr_equipment_view_form
+msgid "Used in location"
+msgstr ""
+
+#. module: technical_service
+#: model:ir.model,name:technical_service.model_res_users
+msgid "Users"
+msgstr ""
+
+#. module: maintenance
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_equipment__partner_id
+#: model_terms:ir.ui.view,arch_db:maintenance.hr_equipment_view_search
+msgid "Vendor"
+msgstr ""
+
+#. module: maintenance
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_equipment__partner_ref
+msgid "Vendor Reference"
+msgstr ""
+
+#. modules: maintenance, technical_service
+#: selection:maintenance.request,priority:0
+#: selection:technical.service.request,priority:0
+msgid "Very Low"
+msgstr ""
+
+#. module: maintenance
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_equipment__warranty_date
+msgid "Warranty Expiration Date"
+msgstr ""
+
+#. modules: maintenance, technical_service
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_equipment__website_message_ids
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_equipment_category__website_message_ids
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_request__website_message_ids
+#: model:ir.model.fields,field_description:technical_service.field_technical_service_request__website_message_ids
+msgid "Website Messages"
+msgstr ""
+
+#. modules: maintenance, technical_service
+#: model:ir.model.fields,help:maintenance.field_maintenance_equipment__website_message_ids
+#: model:ir.model.fields,help:maintenance.field_maintenance_equipment_category__website_message_ids
+#: model:ir.model.fields,help:maintenance.field_maintenance_request__website_message_ids
+#: model:ir.model.fields,help:technical_service.field_technical_service_request__website_message_ids
+msgid "Website communication history"
+msgstr ""
+
+#. module: technical_service
+#: code:addons/technical_service/models/models.py:75
+#, python-format
+msgid "You can leave it in {} if you want. But remember this is the rate this team will invoice per hour at work."
+msgstr ""
+
+#. module: maintenance
+#: code:addons/maintenance/models/maintenance.py:77
+#, python-format
+msgid "You cannot delete an equipment category containing equipments or maintenance requests."
+msgstr ""
+
+#. module: technical_service
+#: model_terms:ir.ui.view,arch_db:technical_service.devices_category_form_view
+msgid "Your description here.."
+msgstr ""
+
+#. module: maintenance
+#: model_terms:ir.ui.view,arch_db:maintenance.hr_equipment_view_form
+msgid "days"
+msgstr ""
+
+#. module: maintenance
+#: model_terms:ir.ui.view,arch_db:maintenance.hr_equipment_view_form
+msgid "hours"
+msgstr ""
+
+#. module: maintenance
+#: model_terms:ir.ui.view,arch_db:maintenance.hr_equipment_request_view_graph
+#: model_terms:ir.ui.view,arch_db:maintenance.hr_equipment_request_view_pivot
+#: model_terms:ir.ui.view,arch_db:maintenance.hr_equipment_request_view_tree
+msgid "maintenance Request"
+msgstr ""
+
+#. module: maintenance
+#: model_terms:ir.ui.view,arch_db:maintenance.hr_equipment_request_view_search
+msgid "maintenance Request Search"
+msgstr ""
+

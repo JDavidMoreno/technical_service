@@ -1,24 +1,37 @@
 <?xml version="1.0" encoding="utf-8" ?>
 
 <odoo>
-
 	<template id="assets_backend" name="Technical Service Assets" inherit_id="web.assets_backend">
 	    <xpath expr="." position="inside">
 	         <link rel="stylesheet" href="technical_service/static/src/css/styles.css"/>
 	    </xpath>
 	</template>
 
-
+	<record id="res_users_inherited_view" model="ir.ui.view">
+		<field name="name">res.users.inherited.view</field>
+		<field name="model">res.users</field>
+		<field name="inherit_id" ref="base.view_users_form"/>
+		<field name="arch" type="xml">
+			<xpath expr="//notebook" position="inside">
+				<page string="Other Applications">
+					<group>
+						<group>
+							<field name="technical_team_id" />
+						</group>
+					</group>
+				</page>
+			</xpath>
+		</field>
+	</record>
 
 	<record id="invoice_see_action" model="ir.actions.act_window">
-		<field name="name">See Invoice</field>
+		<field name="name">Invoice</field>
 		<field name="res_model">account.invoice</field>
 		<field name="view_type">form</field>
 		<field name="view_mode">tree,form,calendar,graph</field>
-		<field name="view_id" ref="account.invoice_tree"/>
+		<field name="view_id" ref="account.invoice_form"/>
 		<field name="search_view_id" ref="account.view_account_invoice_filter"/>
 	</record>
-
 
 	<record id="requests_kanban_view" model="ir.ui.view">
 		<field name="name">requests.kaban.view</field>
@@ -34,7 +47,7 @@
 			<field name="activity_state" position="after">
 				<field name="related_company_id"/>
 				<field name="technical_team"/>
-				<field name="customer"/>
+				<field name="partner_id"/>
 				<field name="address"/>
 				<field name="device"/>
 				<field name="custom_field1"/>
@@ -44,6 +57,8 @@
 				<field name="requirements"/>
 				<field name="duration"/>
 				<field name="invoice_id"/>
+				<field name="stage_id"/>
+				<field name="stage_sequence"/>
 			</field>
 			<xpath expr="//div[@class='o_kanban_record_top']/b" position="inside">
 				<field name="related_company_id"/>
@@ -57,10 +72,10 @@
 			</xpath>
 			<xpath expr="//div[hasclass('o_kanban_record_bottom')]" position="after">
 				<button type="object" name="check_requirements" class="btn-primary" attrs="{'invisible': [('requirements', '=', True)]}">Requirements</button>
+				<button type="object" name="generate_invoice" class="btn-primary" attrs="{'invisible': ['|', ('stage_sequence', 'not in', (3,)), ('requirements', '=', False)]}">Generate Invoice</button>
 			</xpath>
 		</field>
 	</record>
-
 
 	<record id="requests_form_view" model="ir.ui.view">
 		<field name="name">requests.form.view</field>
@@ -71,30 +86,24 @@
 			        <button string="Cancel" name="archive_equipment_request" type="object" attrs="{'invisible': [('archive', '=', True)]}"/>
 			        <button string="Reopen Request" name="reset_equipment_request" type="object" attrs="{'invisible': [('archive', '=', False)]}"/>
 			        <button string="Requirements" type="object" name="check_requirements" class="btn-primary" attrs="{'invisible': [('requirements', '=', True)]}"/>
-			        <button string="Generate Invoice" name="generate_invoice" type="object" attrs="{'invisible': [('stage_name', 'not in', ('Repaired'))]}" class="btn-primary" />
+			        <button string="Generate Invoice" name="generate_invoice" type="object" attrs="{'invisible': ['|', ('stage_sequence', 'not in', (3,)), ('requirements', '=', False)]}" class="btn-primary" />
 			        <field name="stage_id" widget="statusbar" options="{'clickable': '1'}" attrs="{'invisible': [('archive', '=', True)]}"/>
-
 			    </header>
 			    <sheet>
-			    	<div class="oe_button_box" attrs="{'invisible': [('stage_name', 'not in', ('Invoiced',))]}">
+			    	<div class="oe_button_box" attrs="{'invisible': [('stage_sequence', 'not in', (5,))]}">
                         <button name="invoice_see" type="object" class="oe_stat_button" icon="fa-file-text">
                             <field name="invoice_id" widget="statinfo"/>
                         </button>
                     </div>
-			    	<!-- <field name="equipment_id" invisible="1"/>
-			    	<field name="maintenance_type" invisible="1"/>
-			    	<field name="maintenance_team_id" invisible="1"/> -->
-			    	<field name="company_id" groups="base.group_multi_company" options="{'no_create': True}" invisible="1"/>
-			    	<field name="category_id" groups="maintenance.group_equipment_manager" invisible="1"/>
-			    	<!-- <field name="maintenance_type" widget="radio" invisible="1"/> -->
-			    	<field name="requirements" invisible="1"/>
-			    	<field name="stage_name" invisible="1"/>
 
+			    	<field name="category_id" groups="maintenance.group_equipment_manager" invisible="1"/>
+			    	<field name="requirements" invisible="1"/>
+			    	<field name="stage_sequence" invisible="1"/>
 			    	<div attrs="{'invisible': [('archive', '=', False)]}">
 			    	    <span class="badge badge-warning float-right">Canceled</span>
 			    	</div>
 			    	<div class="oe_right">
-			    	    <field name="kanban_state" class="oe_inline" widget="state_selection"/>
+			    	    
 			    	</div>
 			    	<div class="oe_title">
 			    	    <label for="name" class="oe_edit_only" string="Name"/>
@@ -110,16 +119,16 @@
 			    		<group>
 			    			<field name="priority" widget="priority"/>
 			    			<field name="archive" invisible="1"/>
+			    			<field name="kanban_state" class="oe_inline" widget="state_selection"/>
 			    		</group>
 			    	</group>
 			    	<group>
 			    		<group>
 			    			<separator string="Customer"/>
 			    			<field name="our_companies" invisible="1"/>
-			    			<field name="customer" domain="[('id','not in',our_companies)]"/>
+			    			<field name="partner_id" domain="[('id','not in',our_companies)]"/>
 			    			<field name="address"/>
 			    			<field name="device"/>
-
 			    			<br/><br/>
 			    			<separator string="Operation"/>
 			    			<field name="user_id" string="Responsible"/>
@@ -134,7 +143,7 @@
                         	<field name="custom_field2"/>
                         </group>
                     </group>
-                    <div class="technical_service" attrs="{'invisible': [('stage_name', 'not in', ('Time &amp; Replacements', 'Repaired', 'Scrap', 'Invoiced'))]}">
+                    <div class="technical_service" attrs="{'invisible': [('stage_sequence', 'not in', (2, 3, 4, 5))]}">
                 		<group>
                 			<group>
 				    			<separator string="Time &amp; Replacements"/><br/>
@@ -146,14 +155,17 @@
 	                			</div>
                 			</group>
                 		</group>
-                    	<field name="invoice_line_ids">
-                    		<tree editable="bottom" class="technical_service_tree">
+                    	<field name="invoice_line_ids" context="{'default_invoice_id': invoice_id, 'default_account_id': 480, 'default_currency_id': 1, 'default_product_id': None}">
+                    		<!--    -->
+                    		<tree editable="bottom" class="technical_service_tree" string="Replacements">
+                    			<field name="technical_request" invisible="1"/>
                     			<field name="name" string="Replacement"/>
                     			<field name="account_id" invisible="1" />
+                    			<field name="invoice_id" invisible="1"/>
                     			<field name="quantity"/>
                     			<field name="uom_id" groups="uom.group_uom"/>
                     			<field name="price_unit"/>
-                    			<field date-name="invoice_line_tax_ids" name="invoice_line_tax_ids" context="{'tree_view_ref': 'account.account_tax_view_tree', 'search_view_ref': 'account.account_tax_view_search'}" domain="[('type_tax_use', '=', 'sale'), ('company_id', '=', parent.company_id)]" widget="many2many_tags"/>
+                    			<field name="invoice_line_tax_ids" context="{'tree_view_ref': 'account.account_tax_view_tree', 'search_view_ref': 'account.account_tax_view_search'}" domain="[('type_tax_use', '=', 'sale')]" widget="many2many_tags"/>
                     			<field name="price_subtotal" groups="account.group_show_line_subtotals_tax_excluded"/>
                     			<field name="price_total" groups="account.group_show_line_subtotals_tax_included"/>
                     			<field name="currency_id" invisible="1"/>
@@ -171,13 +183,27 @@
         </field>
     </record>
 
+    <record id="request_search_view" model="ir.ui.view">
+    	<field name="name">request.search.view</field>
+    	<field name="model">technical.service.request</field>
+    	<field name="arch" type="xml">
+    		<search>
+	    		<field name="technical_team"/>
+	    		<field name="company_id"/>
+	    		<field name="name"/>
+	    		<group string="Group by">
+	    			<filter string="Company" name="request_groupby_company" domain="[]" context="{'group_by': 'company_id'}"/>
+	    			<filter string="Team" name="request_groupby_team" groups="technical_service.group_technical_service_manager" domain="[]" context="{'group_by': 'technical_team'}"/>
+	    		</group>
+	    	</search>
+    	</field>
+    </record>
 
 	<record id="requests_action" model="ir.actions.act_window">
 		<field name="name">Technical Service Requests</field>
 		<field name="res_model">technical.service.request</field>
 	    <field name="view_mode">kanban,form</field>
 	    <field name="view_id" ref="requests_kanban_view"/>
-	    <field name="context">{'default_user_id': uid, 'default_account_id': 480, 'default_currency_id': 1}</field>
 	    <field name="help" type="html">
 	        <p class="o_view_nocontent_smiling_face">
 	            Add a new technical service request
@@ -185,13 +211,57 @@
 	    </field>
 	</record>
 
+	<record id="teams_form_view" model="ir.ui.view">
+		<field name="name">teams.form.view</field>
+		<field name="model">technical.service.team</field>
+		<field name="arch" type="xml">
+			<form>
+				<sheet>
+					<label for="name" string="Name"/><br/>
+					<h1><field name="name"/></h1>
+					<group>
+						<group>
+							<field name="color"/>
+						</group>
+						<group>
+							<field name="rate"/>
+						</group>
+					</group>
+					<notebook>
+						<page name="members" string="Team Members">
+							<field name="member_ids" widget="many2many">
+								<kanban quick_create="false" create="true" delete="true">
+									<field name="id"/>
+									<field name="name"/>
+									<templates>
+										<t t-name="kanban-box">
+											<div class="oe_kanban_global_click" style="max-width: 200px">
+												<div class="o_kanban_record_top">
+													<img t-att-src="kanban_image('res.users', 'image_small', record.id.raw_value)" height="40" width="40" class="oe_avatar oe_kaban_avatar_smallbox mb0" alt="Avatar"/>
+													<div class="o_kanban_record_headings ml8">
+														<strong class="o_kanban_record_title"><field name="name"/></strong>
+													</div>
+												</div>
+											</div>
+										</t>
+									</templates>
+								</kanban>
+							</field>
+						</page>
+						<page name="requests" string="Requests">
+							<field name="request_ids"/>
+						</page>
+					</notebook>
+				</sheet>
+			</form>
+		</field>
+	</record>
+
 	<record id="teams_action" model="ir.actions.act_window">
 		<field name="name">Teams</field>
 		<field name="res_model">technical.service.team</field>
 		<field name="view_mode">tree,form</field>
 	</record>
-
-	<!-- TODO - It'd be much better to write a kanban view for devices showing their photos -->
 
 	<record id="devices_form_view" model="ir.ui.view">
 		<field name="name">devices.form.view</field>
@@ -307,7 +377,4 @@
 			</p>
 		</field>
 	</record>
-
-
-
 </odoo>

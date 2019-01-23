@@ -1,24 +1,32 @@
 <?xml version="1.0" encoding="utf-8" ?>
 
 <odoo>
+	<record id="maintenance.stage_1" model="maintenance.stage">
+		<field name="name">Scheduled</field>
+		<field name="sequence" eval="1"/>
+		<field name="fold" eval="False"/>
+	</record>
+
 	<record id="maintenance.stage_3" model="maintenance.stage">
 	    <field name="name">Time &amp; Replacements</field>
 	    <field name="sequence" eval="2" />
 	    <field name="fold" eval="False" />
-	    <field name="done" eval="False" />
 	</record>
+
 	<record id="maintenance.stage_4" model="maintenance.stage">
 	    <field name="name">Repaired</field>
 	    <field name="sequence" eval="3" />
 	    <field name="fold" eval="False" />
 	    <field name="done" eval="True" />
 	</record>
+
 	<record id="stage_5" model="maintenance.stage">
 	    <field name="name">Scrap</field>
 	    <field name="sequence" eval="4" />
 	    <field name="fold" eval="True" />
 	    <field name="done" eval="True" />
 	</record>
+	
 	<record id="stage_6" model="maintenance.stage">
 	    <field name="name">Invoiced</field>
 	    <field name="sequence" eval="5" />
