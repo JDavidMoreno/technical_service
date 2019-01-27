@@ -1,12 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 
 <odoo>
-	<template id="assets_backend" name="Technical Service Assets" inherit_id="web.assets_backend">
-	    <xpath expr="." position="inside">
-	         <link rel="stylesheet" href="technical_service/static/src/css/styles.css"/>
-	    </xpath>
-	</template>
-
 	<record id="res_users_inherited_view" model="ir.ui.view">
 		<field name="name">res.users.inherited.view</field>
 		<field name="model">res.users</field>
@@ -39,6 +33,9 @@
 		<field name="inherit_id" ref="maintenance.hr_equipment_request_view_kanban"/>
 		<field name="mode">primary</field>
 		<field name="arch" type="xml">
+			<xpath expr="//kanban" position="attributes">
+				<attribute name="quick_create">false</attribute>
+			</xpath>
 			<xpath expr="//templates/t[@t-name='kanban-tooltip']" position="replace">
 				<t t-name="kanban-tooltip">
 					<p>Click here to see details</p>
@@ -85,7 +82,7 @@
 			    <header>
 			        <button string="Cancel" name="archive_equipment_request" type="object" attrs="{'invisible': [('archive', '=', True)]}"/>
 			        <button string="Reopen Request" name="reset_equipment_request" type="object" attrs="{'invisible': [('archive', '=', False)]}"/>
-			        <button string="Requirements" type="object" name="check_requirements" class="btn-primary" attrs="{'invisible': [('requirements', '=', True)]}"/>
+			        <button string="Requirements" type="object" name="check_requirements" class="btn-primary" attrs="{'invisible': [('requirements', '=', True)]}" />
 			        <button string="Generate Invoice" name="generate_invoice" type="object" attrs="{'invisible': ['|', ('stage_sequence', 'not in', (3,)), ('requirements', '=', False)]}" class="btn-primary" />
 			        <field name="stage_id" widget="statusbar" options="{'clickable': '1'}" attrs="{'invisible': [('archive', '=', True)]}"/>
 			    </header>
@@ -95,7 +92,7 @@
                             <field name="invoice_id" widget="statinfo"/>
                         </button>
                     </div>
-
+                    <field name="color" invisible="True"/>
 			    	<field name="category_id" groups="maintenance.group_equipment_manager" invisible="1"/>
 			    	<field name="requirements" invisible="1"/>
 			    	<field name="stage_sequence" invisible="1"/>
@@ -155,11 +152,27 @@
 	                			</div>
                 			</group>
                 		</group>
-                    	<field name="invoice_line_ids" context="{'default_invoice_id': invoice_id, 'default_account_id': 480, 'default_currency_id': 1, 'default_product_id': None}">
+                		<label for="new_schedule_date" /><br/>
+                		<field name="new_schedule_date" context="{'default_state': 'open', 'default_allday': False, 'default_name': name}">
+                			<tree editable="bottom">
+                				<field name="id" invisible="True"/>
+                				<field name="name" invisible="True"/>
+                				<field name="start_datetime" string="Start Visit"/>
+                				<field name="start_date" invisible="True"/>
+                				<field name="start" invisible="True"/>
+                				<field name="stop_datetime" string="End"/>
+                				<field name="stop_date" invisible="True"/>
+                				<field name="stop" invisible="True"/>
+                				<field name="allday" invisible="True"/>
+                				<field name="state" invisible="True"/>
+                				<field name="duration" widget="float_time"/>
+                			</tree>
+                		</field>
+                    	<field name="invoice_line_ids" context="{'default_invoice_id': invoice_id, 'default_account_id': 480, 'default_currency_id': 1, 'default_product_id': None}" options="{'create_text': 'Add turtle'}">
                     		<!--    -->
-                    		<tree editable="bottom" class="technical_service_tree" string="Replacements">
+                    		<tree editable="bottom" class="technical_service_tree">
                     			<field name="technical_request" invisible="1"/>
-                    			<field name="name" string="Replacement"/>
+                    			<field name="name" string="Items"/>
                     			<field name="account_id" invisible="1" />
                     			<field name="invoice_id" invisible="1"/>
                     			<field name="quantity"/>
@@ -181,6 +194,21 @@
                 </div>
             </form>
         </field>
+    </record>
+
+    <record id="request_tree_view" model="ir.ui.view">
+    	<field name="name">request.tree.view</field>
+    	<field name="model">technical.service.request</field>
+    	<field name="arch" type="xml">
+    		<tree>
+    			<field name="name"/>
+    			<field name="partner_id"/>
+    			<field name="related_company_id"/>
+    			<field name="technical_team"/>
+    			<field name="schedule_date"/>
+    			<field name="close_date"/>
+    		</tree>
+    	</field>
     </record>
 
     <record id="request_search_view" model="ir.ui.view">
@@ -221,10 +249,11 @@
 					<h1><field name="name"/></h1>
 					<group>
 						<group>
-							<field name="color"/>
+							<field name="rate"/>
+							
 						</group>
 						<group>
-							<field name="rate"/>
+							<field name="color" invisible="True"/>
 						</group>
 					</group>
 					<notebook>
@@ -328,6 +357,19 @@
 		</field>
 	</record>
 
+	<record id="device_tree_view" model="ir.ui.view">
+		<field name="name">device.tree.view</field>
+		<field name="model">technical.service.device</field>
+		<field name="arch" type="xml">
+			<tree>
+				<field name="name"/>
+				<field name="company_id"/>
+				<field name="serial_code"/>
+				<field name="category_id"/>
+			</tree>
+		</field>
+	</record>
+
 	<record id="device_search_view" model="ir.ui.view">
 		<field name="name">device.search.view</field>
 		<field name="model">technical.service.device</field>
@@ -345,8 +387,19 @@
 		</field>
 	</record>
 
+	<record id="devices_action" model="ir.actions.act_window">
+		<field name="name">Devices</field>
+		<field name="res_model">technical.service.device</field>
+		<field name="view_mode">kanban,tree,form</field>
+		<field name="help" type="html">
+			<p class="o_view_nocontent_smiling_face">
+				Add a new available device to your list
+			</p>
+		</field>
+	</record>
+
 	<record id="devices_category_form_view" model="ir.ui.view">
-		<field name="name">devices_category_form_view</field>
+		<field name="name">devices.category.form.view</field>
 		<field name="model">technical.service.device.category</field>
 		<field name="arch" type="xml">
 			<form string="Category">
@@ -359,21 +412,31 @@
 					</div>
 					<h3><label for="description" string="Description"/></h3>
 					<field name="description" placeholder="Your description here.."/>
-					<br/>
-					<h3><label for="device_ids" string="Devices"/></h3>
-					<field name="device_ids" />
 				</sheet>
 			</form>
 		</field>
 	</record>
 
-	<record id="devices_action" model="ir.actions.act_window">
-		<field name="name">Devices</field>
-		<field name="res_model">technical.service.device</field>
-		<field name="view_mode">kanban,tree,form</field>
+	<record id="devices_category_tree_view" model="ir.ui.view">
+		<field name="name">device.category.tree.view</field>
+		<field name="model">technical.service.device.category</field>
+		<field name="arch" type="xml">
+			<tree editable="bottom" create="0">
+				<field name="name"/>
+				<field name="description"/>
+			</tree>
+		</field>
+	</record>
+
+	<record id="device_category_action" model="ir.actions.act_window">
+		<field name="name">Device Categories</field>
+		<field name="res_model">technical.service.device.category</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+		<field name="view_id" ref="technical_service.devices_category_tree_view"/>
 		<field name="help" type="html">
 			<p class="o_view_nocontent_smiling_face">
-				Add a new available device to your list
+				Add a new category for your Devices
 			</p>
 		</field>
 	</record>

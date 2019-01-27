@@ -22,7 +22,7 @@ class TechnicalServiceRequestDuration(models.TransientModel):
 	@api.multi
 	def confirm_duration(self):
 		request = self.env['technical.service.request'].browse(self.env.context.get('active_id'))
-
+		
 		if not self.b_duration and self.duration != 0:
 			request.duration = self.duration
 			self.b_duration = True

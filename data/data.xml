@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8" ?>
 
 <odoo>
+	<record id="maintenance.stage_0" model="maintenance.stage">
+	    <field name="name">New Request</field>
+	    <field name="sequence" eval="0" />
+	    <field name="fold" eval="False" />
+	</record>
+
 	<record id="maintenance.stage_1" model="maintenance.stage">
 		<field name="name">Scheduled</field>
 		<field name="sequence" eval="1"/>

@@ -1361,13 +1361,13 @@ msgstr "Reparado"
 
 #. module: technical_service
 #: model_terms:ir.ui.view,arch_db:technical_service.requests_form_view
-msgid "Replacement"
-msgstr "Recambio"
+msgid "Items"
+msgstr "Items"
 
 #. module: technical_service
 #: model_terms:ir.ui.view,arch_db:technical_service.requests_form_view
-msgid "Replacements"
-msgstr "Recambios"
+msgid "Items"
+msgstr "Items"
 
 #. module: maintenance
 #: model:ir.ui.menu,name:maintenance.maintenance_reporting

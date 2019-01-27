@@ -19,6 +19,10 @@ class TechnicalResUsersInherited(models.Model):
 
 	technical_team_id = fields.Many2one('technical.service.team', string="Technical Team")
 
+class MeetingInherited(models.Model):
+	_inherit = 'calendar.event'
+
+	technical_request_id = fields.Many2one('technical.service.request', string="Technical Request")	
 
 class TechnicalServiceDeviceCategory(models.Model):
 	_name = 'technical.service.device.category'
@@ -27,7 +31,6 @@ class TechnicalServiceDeviceCategory(models.Model):
 	name = fields.Char(string="Category", required=True)
 	description = fields.Text(string="Description")
 	device_ids = fields.One2many('technical.service.device', 'category_id', string="Devices")
-
 
 class TechnicalServiceDevice(models.Model):
 	_name = 'technical.service.device'
@@ -57,10 +60,16 @@ class TechnicalServiceTeam(models.Model):
 
 	name = fields.Char(string='Name', required=True)
 	member_ids = fields.One2many('res.users', 'technical_team_id', string="Members")
-	# TODO: I need to know what exactly do with color. Is it useful?
-	color = fields.Integer(string="Color Index", default=0)
-	request_ids = fields.One2many('technical.service.request', 'name', string="Request")
+	color = fields.Integer(string="Color Index", readonly=True)
+	#TODO: Don't show the actual request asociated to this team
+	request_ids = fields.One2many('technical.service.request', 'technical_team', string="Request")
 	rate = fields.Float(string="Rate", help="Service rate per hour", required=True)
+
+	@api.model
+	def create(self, vals):
+		res = super(TechnicalServiceTeam, self).create(vals)
+		res['color'] = res['id']
+		return res
 
 	@api.one
 	@api.constrains('rate')
@@ -88,15 +97,21 @@ class TechnicalServiceRequest(models.Model):
 	stage_sequence = fields.Integer(related="stage_id.sequence", readonly=True, store=True)
 	partner_id = fields.Many2one('res.partner', string="Customer", required=True)
 	our_companies = fields.Many2many('res.partner', store=True, default=_get_our_companies)
-	address = fields.Char(string="Address", compute="_get_customer_address", store=True)
-	device = fields.Many2one('technical.service.device')
+	address = fields.Char(string="Address", compute="_get_customer_address", store=True, help="Customer address")
+	device = fields.Many2one('technical.service.device', string="Device", help="The device to be checked")
 	related_company_id = fields.Many2one('res.partner', string="Related Company", required=True, domain="[('is_company','=',True)]")
 	custom_field1 = fields.Char(string="Custom Field - 1")
 	custom_field2 = fields.Char(string="Custom Field - 2")
 	technical_team = fields.Many2one('technical.service.team', string="Technical Team", required=True)
 	requirements = fields.Boolean(default=True)
-	invoice_line_ids = fields.One2many('account.invoice.line', inverse_name="technical_request", string="Requirements", readonly=False, store=True)
+	invoice_line_ids = fields.One2many('account.invoice.line', inverse_name="technical_request", string="Requirements", readonly=False)
 	invoice_id = fields.Many2one('account.invoice', string="Invoice")
+	new_schedule_date = fields.One2many('calendar.event', 'technical_request_id', string="New Scheduled Date" )
+
+	@api.onchange('technical_team')
+	def _get_team_color(self):
+		if self.technical_team and self.technical_team.color:
+			self.color = self.technical_team.color
 
 	@api.multi
 	def invoice_see(self):

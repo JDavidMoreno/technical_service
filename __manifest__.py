@@ -34,6 +34,7 @@
         'data/data.xml',
         'wizard/wizards.xml',
         'views/menuitems.xml',
+        'views/assets.xml',
     ],
     # only loaded in demonstration mode
     'demo': [

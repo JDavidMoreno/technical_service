@@ -27,7 +27,6 @@
 		<field name="implied_ids" eval="[(4, ref('technical_service.group_technical_service_manager'))]"/>
 	</record>
 
-	<!-- Member of a team can only see their technical requests -->
 	<record id="service_team_rule" model="ir.rule">
 		<field name="name">Service Teams just see their Requests</field>
 		<field name="model_id" ref="model_technical_service_request"/>
