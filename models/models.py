@@ -1,9 +1,11 @@
 # -*- coding: utf-8 -*-
 
 import logging
+from datetime import timedelta
 
 from odoo import models, fields, api, tools, _ 
 from odoo.exceptions import ValidationError, RedirectWarning
+
 
 
 _logger = logging.getLogger(__name__)
@@ -22,7 +24,7 @@ class TechnicalResUsersInherited(models.Model):
 class MeetingInherited(models.Model):
 	_inherit = 'calendar.event'
 
-	technical_request_id = fields.Many2one('technical.service.request', string="Technical Request")	
+	technical_request_id = fields.Many2one('technical.service.request', string="Technical Request")
 
 class TechnicalServiceDeviceCategory(models.Model):
 	_name = 'technical.service.device.category'
@@ -61,7 +63,6 @@ class TechnicalServiceTeam(models.Model):
 	name = fields.Char(string='Name', required=True)
 	member_ids = fields.One2many('res.users', 'technical_team_id', string="Members")
 	color = fields.Integer(string="Color Index", readonly=True)
-	#TODO: Don't show the actual request asociated to this team
 	request_ids = fields.One2many('technical.service.request', 'technical_team', string="Request")
 	rate = fields.Float(string="Rate", help="Service rate per hour", required=True)
 
@@ -104,9 +105,30 @@ class TechnicalServiceRequest(models.Model):
 	custom_field2 = fields.Char(string="Custom Field - 2")
 	technical_team = fields.Many2one('technical.service.team', string="Technical Team", required=True)
 	requirements = fields.Boolean(default=True)
-	invoice_line_ids = fields.One2many('account.invoice.line', inverse_name="technical_request", string="Requirements", readonly=False)
+	invoice_line_ids = fields.One2many('account.invoice.line', inverse_name="technical_request", string="Replacements & Resources", readonly=False, help="Here you can indicate the resources you spent in the intervention. It'll be invoiced automatically.")
 	invoice_id = fields.Many2one('account.invoice', string="Invoice")
-	new_schedule_date = fields.One2many('calendar.event', 'technical_request_id', string="New Scheduled Date" )
+	new_schedule_date = fields.One2many('calendar.event', 'technical_request_id', string="Intervention Time", help="Every line is a technical intervention made in a day. Hours must be filled accordingly")
+	first_schedule_date = fields.Datetime('Scheduled Date', help="The day you plan to visit the customer for the first time")
+
+	@api.onchange('first_schedule_date')
+	def _set_first_schedule_date(self):
+		if self.first_schedule_date:
+			values = {
+					'name': self.name,
+					'user_id': self.env.user.id,
+					'start_datetime': self.first_schedule_date,
+					'start': self.first_schedule_date,
+					'stop_datetime': self.first_schedule_date + timedelta(hours=1),
+					'stop': self.first_schedule_date + timedelta(hours=1),
+					'duration': 1,
+					'technical_request_id': self.id,
+					}
+
+			if len(self.new_schedule_date) == 0 and self.stage_id.sequence in (0, 1,):
+				self.update({'new_schedule_date': [(0, False, values)]})
+
+			elif self.stage_id.sequence in (0, 1,):
+				self.update({'new_schedule_date': [(1, self.new_schedule_date[0].id, values)]})
 
 	@api.onchange('technical_team')
 	def _get_team_color(self):
@@ -151,65 +173,27 @@ class TechnicalServiceRequest(models.Model):
 				'res_model': 'technical.service.request.duration',
 				'type': 'ir.actions.act_window',
 				'target': 'new',
+				'context': {'name': self.name},
 				}
 
 		if self.stage_id.sequence == 1:
-			if not self.schedule_date:
-				res_id = self.env['technical.service.request.duration'].create({'b_schedule_date': False})
+			if not self.first_schedule_date:
+				res_id = self.env['technical.service.request.duration'].create({'b_first_schedule_date': False})
 				action.update({'res_id': res_id.id})
 				return action
 
-		if self.stage_id.sequence == 2:
-			if not self.schedule_date:
-				res_id = self.env['technical.service.request.duration'].create({'b_schedule_date': False})
+		if self.stage_id.sequence in (2, 3, 4, 5,):
+			if not self.new_schedule_date:
+				res_id = self.env['technical.service.request.duration'].create({'b_new_schedule_date': False})
 				action.update({'res_id': res_id.id})
 				return action
 
-		if self.stage_id.sequence == 3:
-			if not self.schedule_date:
-				requirements.update({'b_schedule_date': False})
-			if self.duration == 0:
-				requirements.update({'b_duration': False})
-			if bool(requirements):
-				res_id = self.env['technical.service.request.duration'].create(requirements)
-				action.update({'res_id': res_id.id})
-				return action
-				
-		if self.stage_id.sequence == 4:
-			# It's still per define
-			if not self.schedule_date:
-				requirements.update({'b_schedule_date': False})
-			if self.duration == 0:
-				requirements.update({'b_duration': False})
-			if bool(requirements):
-				res_id = self.env['technical.service.request.duration'].create(requirements)
-				action.update({'res_id': res_id.id})
-				return action
-
-		if self.stage_id.sequence == 5:
-			if not self.schedule_date:
-				requirements.update({'b_schedule_date': False})
-			if self.duration == 0:
-				requirements.update({'b_duration': False})
-			if bool(requirements):
-				res_id = self.env['technical.service.request.duration'].create(requirements)
-				action.update({'res_id': res_id.id})
-				return action
-
-	@api.onchange('stage_id', 'duration', 'schedule_date')
+	@api.onchange('stage_id', 'first_schedule_date', 'new_schedule_date')
 	def _check_requirements(self):
 		self.requirements = True
 		message = []
-		ms_duration = _('Duration')
-		ms_schedule_date = _('Scheduled Date')
 
-		if self.stage_id.sequence == 1:
-			if not self.schedule_date:
-				self.requirements = False
-				return {'warning': {'title': _("Did you specify the Scheduled Date?"),
-									'message': _("Please, click the 'Requirements' button to fill all the details.")}}
-
-		if self.stage_id.sequence == 2:
+		if self.stage_id.sequence in (1, 2,):
 			if not self.invoice_id:
 				draft = {'partner_id': self.partner_id.id,
 						 'state': 'draft',
@@ -222,48 +206,21 @@ class TechnicalServiceRequest(models.Model):
 				invoice = self.env['account.invoice'].create(draft).id
 				self.invoice_id = invoice
 
-			if not self.schedule_date:
+			if not self.first_schedule_date and not self.new_schedule_date:
 				self.requirements = False
-				return {'warning': {'title': _("Did you specify the Scheduled Date?"),
-									'message': _("Please, click the 'Requirements' button to fill all the details.")}}
+				return {'warning': {'title': _("Have you scheduled your visit?"),
+									'message': _("Please, click the 'Requirements' button to fill this detail.")}}
 
-		if self.stage_id.sequence == 3:
-			if not self.schedule_date:
+		if self.stage_id.sequence in (3, 4,):
+			if not self.new_schedule_date:
 				self.requirements = False
-				message.append(ms_schedule_date)
-				
-			if self.duration == 0:
-				self.requirements = False
-				message.append(ms_duration)	
-
-			if self.requirements == False:
-				return {'warning': {'title': _("Did you specify the ") + (_(" and the ").join(message)) + "?",
-									'message': _("Please, click the 'Requirements' button to fill all the details.")}}
-
-		if self.stage_id.sequence == 4:
-			if not self.schedule_date:
-				self.requirements = False
-				message.append(ms_schedule_date)
-				
-			if self.duration == 0:
-				self.requirements = False
-				message.append(ms_duration)
-
-			if self.requirements == False:
-				return {'warning': {'title': _("Did you specify the ") + (_(" and the ").join(message)) + "?",
+				return {'warning': {'title': _("How much time have you spent in this intervention?"),
 									'message': _("Please, click the 'Requirements' button to fill all the details.")}}
 
 		if self.stage_id.sequence == 5:
-			if not self.schedule_date:
+			if not self.new_schedule_date:
 				self.requirements = False
-				message.append(ms_schedule_date)
-				
-			if self.duration == 0:
-				self.requirements = False
-				message.append(ms_duration)
-
-			if self.requirements == False:
-				return {'warning': {'title': _("Did you specify the ") + (_(" and the ").join(message)) + "?",
+				return {'warning': {'title': _("How much time have you spent in this intervention?"),
 									'message': _("Please, click the 'Requirements' button to fill all the details.")}}
 
 			if self.invoice_id.state not in ('open', 'paid',):
@@ -271,13 +228,18 @@ class TechnicalServiceRequest(models.Model):
 	
 	@api.multi
 	def generate_invoice(self):
+		duration = 0
+
+		for line in self.new_schedule_date:
+			duration += line.duration
+
 		service =  {
 					'invoice_id': self.invoice_id.id,
 					'account_id': 495,
 					'currency_id': 1,
 					'technical_request': self.id,
 					'name': _('Service Hours'),
-					'quantity': self.duration,
+					'quantity': duration,
 					'price_unit': self.technical_team.rate,
 					'invoice_line_tax_ids': [(4, 2, False)],
 					}

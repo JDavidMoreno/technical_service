@@ -32,15 +32,32 @@
 		<field name="model_id" ref="model_technical_service_request"/>
 		<field name="domain_force">[('technical_team.id', '=', user.technical_team_id.id)]</field>
 		<field name="perm_read" eval="True"/>
-		<field name="perm_write" eval="False"/>
-		<field name="perm_create" eval="False"/>
-		<field name="perm_unlink" eval="False"/>
 		<field name="groups" eval="[(4, ref('technical_service.group_technical_service_team'))]"/>
 	</record>
+
+	<record id="service_team_rule_calendar" model="ir.rule">
+		<field name="name">Service Teams just see their Requests on the Calendar</field>
+		<field name="model_id" ref="model_calendar_event"/>
+		<field name="domain_force">[('technical_request_id.technical_team.id', '=', user.technical_team_id )]</field>
+		<field name="perm_read" eval="True"/>
+		<!-- <field name="perm_write" eval="True"/>
+		<field name="perm_create" eval="True"/>
+		<field name="perm_unlink" eval="True"/> -->
+		<field name="groups" eval="[(4, ref('technical_service.group_technical_service_team'))]"/>
+	</record>
+
 
 	<record id="service_manager_rule" model="ir.rule">
 		<field name="name">Manager can be all team's requests</field>
 		<field name="model_id" ref="model_technical_service_request"/>
+		<field name="domain_force">[]</field>
+		<field name="perm_read" eval="True"/>
+		<field name="groups" eval="[(4, ref('technical_service.group_technical_service_manager'))]"/>
+	</record>
+
+	<record id="service_manager_rule_calendar" model="ir.rule">
+		<field name="name">Manager can be all team's requests on the Calendar</field>
+		<field name="model_id" ref="model_calendar_event"/>
 		<field name="domain_force">[]</field>
 		<field name="perm_read" eval="True"/>
 		<field name="groups" eval="[(4, ref('technical_service.group_technical_service_manager'))]"/>

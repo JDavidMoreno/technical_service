@@ -6,33 +6,39 @@
 		<field name="model">technical.service.request.duration</field>
 		<field name="arch" type="xml">
 			<form>
-				<field name="b_duration" invisible="1"/>
-				<field name="b_schedule_date" invisible="1"/>
-				<div attrs="{'invisible': [('b_duration', '=', True)]}">
-					<h5><b>Have you really spent 0 hours in your Technical Service?</b></h5>
-					<p>If not, please indicate here the amount of time spent:</p>
-					<group>
-						<group>
-				            <label for="duration" />
-							<div colspan="1">
-							    <field name="duration"
-							           widget="float_time"
-							           class="oe_inline"/> <span class="ml8">hours</span>
-							</div>
-						</group>
-					</group>
-				</div>
-				<div attrs="{'invisible': [('b_schedule_date', '=', True)]}">
-					<h5><b>When are you going to see the customer?</b></h5>
+				<field name="b_new_schedule_date" invisible="1"/>
+				<field name="b_first_schedule_date" invisible="1"/>
+				<div attrs="{'invisible': [('b_first_schedule_date', '=', True)]}">
+					<h5><b>When are you going to see your customer?</b></h5>
 					<p>Choose a date:</p>
 					<group>
 						<group>
-							<field name="schedule_date"/>
+							<field name="first_schedule_date"/>
 						</group>
 					</group>
 				</div>
+				<div attrs="{'invisible': [('b_new_schedule_date', '=', True)]}">
+					<h5><b>Repair is done, but looks like you didn't add any hour to your service.</b></h5>
+					<p>Add here the time you spent:</p>
+					<field name="new_schedule_date" context="{'default_state': 'open', 'default_allday': False, 'default_name': context.get('name'), 'default_technical_request_id': context.get('active_id')}" widget="one2many_list">
+						<tree editable="bottom">
+							<field name="id" invisible="True"/>
+							<field name="name" invisible="False"/>
+							<field name="start_datetime" string="Start Visit"/>
+							<field name="start_date" invisible="True"/>
+							<field name="start" invisible="True"/>
+							<field name="stop_datetime" string="End"/>
+							<field name="stop_date" invisible="True"/>
+							<field name="stop" invisible="True"/>
+							<field name="allday" invisible="True"/>
+							<field name="state" invisible="True"/>
+							<field name="duration" widget="float_time"/>
+							<field name="technical_request_id" invisible="True"/>
+						</tree>
+					</field>
+				</div>
 				<footer>
-					<button name="confirm_duration" type="object" string="Confirm" class="oe_right oe_hightlight" />
+					<button name="confirm_duration" type="object" string="Confirm" class="oe_right oe_hightlight"/>
 					<button special="cancel" string="Cancel" class="oe_left oe_link"/>
 				</footer>
 			</form>
