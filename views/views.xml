@@ -30,84 +30,110 @@
 	<record id="requests_kanban_view" model="ir.ui.view">
 		<field name="name">requests.kaban.view</field>
 		<field name="model">ts.request</field>
-		<field name="inherit_id" ref="maintenance.hr_equipment_request_view_kanban"/>
-		<field name="mode">primary</field>
 		<field name="arch" type="xml">
-			<xpath expr="//kanban" position="attributes">
-				<attribute name="quick_create">false</attribute>
-			</xpath>
-			<xpath expr="//templates/t[@t-name='kanban-tooltip']" position="replace">
-				<t t-name="kanban-tooltip">
-					<p>Click here to see details</p>
-				</t>
-			</xpath>
-			<field name="activity_state" position="after">
-				<field name="related_company_id"/>
+			<kanban default_group_by="state" quick_create="0">
+				<field name="company_id"/>
 				<field name="technical_team"/>
 				<field name="partner_id"/>
-				<field name="address"/>
 				<field name="device"/>
-				<field name="custom_field1"/>
-				<field name="custom_field2"/>
 				<field name="close_date"/>
 				<field name="requirements"/>
 				<field name="invoice_id"/>
-				<field name="stage_id"/>
-				<field name="stage_sequence"/>
+				<field name="state"/>
+				<field name="state_sequence"/>
 				<field name="first_schedule_date"/>
 				<field name="schedule_date_ids"/>
-			</field>
-			<xpath expr="//div[@class='o_kanban_record_top']/b" position="inside">
-				<field name="related_company_id"/>
-			</xpath>
-			<xpath expr="//div[@class='o_kanban_record_body']/span[@class='oe_grey']" position="replace">
-				<span class="oe_grey">
-					<field name="equipment_id"/>
-					<field name="technical_team"/>
-					<br/>
-				</span>
-			</xpath>
-			<xpath expr="//div[hasclass('o_kanban_record_bottom')]" position="after">
-				<button type="object" name="check_requirements" class="btn-primary" attrs="{'invisible': [('requirements', '=', True)]}">Requirements</button>
-				<button type="object" name="generate_invoice" class="btn-primary" attrs="{'invisible': ['|', ('stage_sequence', 'not in', (3,)), ('requirements', '=', False)]}">Generate Invoice</button>
-			</xpath>
-		</field>
+				<field name="color"/>
+				<field name="message_needaction_counter"/>
+				<field name="user_id"/>
+				<templates>
+					<t t-name="kanban-tooltip">
+					   <ul class="oe_kanban_tooltip">
+					      <p>Click here to see details</p>
+					   </ul>
+					</t>
+					<t t-name="kanban-box">
+						<div t-attf-class="oe_kanban_color_#{kanban_getcolor(record.color.raw_value)} oe_kanban_card oe_kanban_global_click oe_semantic_html_override">
+							<div class="o_dropdown_kanban dropdown">
+							    <a role="button" class="dropdown-toggle o-no-caret btn" data-toggle="dropdown" href="#" aria-label="Dropdown menu" title="Dropdown menu">
+							        <span class="fa fa-ellipsis-v"/>
+							    </a>
+							    <div class="dropdown-menu" role="menu">
+							        <t t-if="widget.editable"><a role="menuitem" type="edit" class="dropdown-item">Edit...</a></t>
+							        <t t-if="widget.deletable"><a role="menuitem" type="delete" class="dropdown-item">Delete</a></t>
+							        <ul class="oe_kanban_colorpicker" data-field="color"/>
+							    </div>
+							</div>
+							<div class="oe_kanban_content" tooltip="kanban-tooltip">
+							    <div class="o_kanban_record_top">
+							        <b class="o_kanban_record_title">
+							        	<field name="name"/>
+							        	<field name="company_id"/>
+							        </b>
+							    </div>
+							    <div class="o_kanban_record_body">
+							        <span name="requested_by" t-if="record.requested_by.raw_value">Requested by : <field name="requested_by"/><br/></span>
+							        <span class="oe_grey" t-if="record.technical_team.raw_value">
+							        	<field name="technical_team"/><br/>
+							        </span>
+							        <!-- <span t-if="record.category_id.raw_value"><field name="category_id"/></span> -->
+							    </div>
+							    <div class="o_kanban_record_bottom">
+							        <div class="oe_kanban_bottom_left">
+							            <field name="priority" widget="priority"/>
+							            <t t-if="record.message_needaction_counter.raw_value">
+							                <span role="alert" class='oe_kanban_mail_new' title='Unread Messages'><i class='fa fa-comments' role="img" aria-label="Unread Messages"/><t t-raw="record.message_needaction_counter.raw_value"/></span>
+							            </t>
+							        </div>
+							        <div class="oe_kanban_bottom_right">
+							            <field name="kanban_state" widget="state_selection"/>
+							            <img t-att-src="kanban_image('res.users', 'image_small', record.user_id.raw_value)" t-att-title="record.user_id.value" t-att-alt="record.user_id.value" width="24" height="24" class="oe_kanban_avatar float-right"/>
+							        </div>
+							    </div>
+							    <button type="object" name="check_requirements" class="btn-primary" attrs="{'invisible': [('requirements', '=', True)]}">Requirements</button>
+							    <button type="object" name="generate_invoice" class="btn-primary" attrs="{'invisible': ['|', ('state_sequence', 'not in', (3,)), ('requirements', '=', False)]}">Generate Invoice</button>
+	                        </div>
+	                        <div class="oe_clear"></div>
+	                    </div>
+	                </t>
+	            </templates>
+	        </kanban>
+	    </field>
 	</record>
 
 	<record id="requests_form_view" model="ir.ui.view">
 		<field name="name">requests.form.view</field>
 		<field name="model">ts.request</field>
 		<field name="arch" type="xml">
-			<form string="Maintenance Request">
+			<form string="Technical Service Request">
 			    <header>
 			        <button string="Cancel" name="archive_equipment_request" type="object" attrs="{'invisible': [('archive', '=', True)]}"/>
 			        <button string="Reopen Request" name="reset_equipment_request" type="object" attrs="{'invisible': [('archive', '=', False)]}"/>
 			        <button string="Requirements" type="object" name="check_requirements" class="btn-primary" attrs="{'invisible': [('requirements', '=', True)]}" />
-			        <button string="Generate Invoice" name="generate_invoice" type="object" attrs="{'invisible': ['|', ('stage_sequence', 'not in', (3,)), ('requirements', '=', False)]}" class="btn-primary" />
-			        <field name="stage_id" widget="statusbar" options="{'clickable': '1'}" attrs="{'invisible': [('archive', '=', True)]}"/>
+			        <button string="Generate Invoice" name="generate_invoice" type="object" attrs="{'invisible': ['|', ('state_sequence', 'not in', (3,)), ('requirements', '=', False)]}" class="btn-primary" />
+			        <field name="state" widget="statusbar" options="{'clickable': '1'}" attrs="{'invisible': [('archive', '=', True)]}"/>
+			        <field name="state_sequence" invisible="True"/>
 			    </header>
 			    <sheet>
-			    	<div class="oe_button_box" attrs="{'invisible': [('stage_sequence', 'not in', (5,))]}">
+			    	<div class="oe_button_box" attrs="{'invisible': [('state_sequence', 'not in', (5,))]}">
                         <button name="invoice_see" type="object" class="oe_stat_button" icon="fa-file-text">
                             <field name="invoice_id" widget="statinfo"/>
                         </button>
                     </div>
                     <field name="color" invisible="True"/>
-			    	<field name="category_id" groups="maintenance.group_equipment_manager" invisible="1"/>
 			    	<field name="requirements" invisible="1"/>
-			    	<field name="stage_sequence" invisible="1"/>
 			    	<div attrs="{'invisible': [('archive', '=', False)]}">
 			    	    <span class="badge badge-warning float-right">Canceled</span>
 			    	</div>
 			    	<div class="oe_title">
 			    	    <label for="name" class="oe_edit_only" string="Name"/>
 			    	    <h1>
-			    	        <field name="name" placeholder="Maintenance Request"/>
+			    	        <field name="name" placeholder="Technical Request"/>
 			    	    </h1>
 			    	</div>
 			    	<group>
 			    		<group>
-			    			<field name="owner_user_id" string="Requested By"/>
+			    			<field name="requested_by" string="Requested By" attrs="{'readonly': [('state_sequence', 'not in', (1,))]}"/>
 			    			<field name="request_date" readonly="True"/>
 			    		</group>
 			    		<group>
@@ -119,28 +145,28 @@
 			    	<group>
 			    		<group>
 			    			<separator string="Customer"/>
-			    			<field name="our_companies" invisible="1"/>
-			    			<field name="partner_id" domain="[('id','not in',our_companies)]"/>
+			    			<field name="companies_clients" invisible="1"/>
+			    			<field name="partner_id" domain="[('id','not in',companies_clients)]"/>
 			    			<field name="address"/>
 			    			<field name="device"/>
 			    			<br/><br/>
 			    			<separator string="Operation"/>
 			    			<field name="user_id" string="Responsible"/>
 			    			<field name="technical_team"/>
-			    			<field name="first_schedule_date" string="Scheduled Date"  attrs="{'invisible': [('stage_sequence', 'not in', (0,1,))]}"/>
+			    			<field name="first_schedule_date" string="Scheduled Date"  attrs="{'invisible': [('state_sequence', 'not in', (0,1,))]}"/>
                             <field name="close_date" groups="base.group_no_one" readonly="True"/>
                         </group>
                         <group>
                         	<separator string="Data by Company"/>
-                        	<field name="related_company_id"/>
-                        	<field name="custom_field1" attrs="{'invisible': [('related_company_id','not in', (19,))]}"/>
+                        	<field name="company_id"/>
+                        	<field name="custom_field1" attrs="{'invisible': [('company_id','not in', (19,))]}"/>
                         	<field name="custom_field2"/>
                         </group>
                     </group>
-                    <div class="technical_service" attrs="{'invisible': [('stage_sequence', 'not in', (2, 3, 4, 5))]}">
+                    <div class="technical_service" attrs="{'invisible': [('state_sequence', 'not in', (2, 3, 4, 5))]}">
                 		<label for="schedule_date_ids" style="color: #7c7bad;" /><br/>
                 		<field name="schedule_date_ids" context="{'default_name': name, 'default_technical_request_id': active_id, 'default_technical_team_id': technical_team}">
-                			<tree editable="bottom">
+                			<tree editable="bottom" class="technical_service_tree">
                 				<field name="name"/>
                 				<field name="start"/>
                 				<field name="duration" widget="float_time"/>
@@ -173,7 +199,6 @@
                 </sheet>
                 <div class="oe_chatter">
                     <field name="message_follower_ids" widget="mail_followers"/>
-                    <field name="activity_ids" widget="mail_activity"/>
                     <field name="message_ids" widget="mail_thread"/>
                 </div>
             </form>
@@ -187,7 +212,7 @@
     		<tree>
     			<field name="name"/>
     			<field name="partner_id"/>
-    			<field name="related_company_id"/>
+    			<field name="company_id"/>
     			<field name="technical_team"/>
     			<field name="schedule_date_ids" invisible="True"/>
     			<field name="close_date"/>

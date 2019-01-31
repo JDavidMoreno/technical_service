@@ -1,43 +1,61 @@
 <?xml version="1.0" encoding="utf-8" ?>
 
 <odoo>
-	<record id="maintenance.stage_0" model="maintenance.stage">
-	    <field name="name">New Request</field>
-	    <field name="sequence" eval="0" />
-	    <field name="fold" eval="False" />
+	<record id="ts_req_created" model="mail.message.subtype">
+	    <field name="name">Request Created</field>
+	    <field name="res_model">ts.request</field>
+	    <field name="default" eval="False"/>
+	    <field name="hidden" eval="True"/>
+	    <field name="description">Technical Request created</field>
 	</record>
 
-	<record id="maintenance.stage_1" model="maintenance.stage">
+	<record id="ts_req_status" model="mail.message.subtype">
+	    <field name="name">Status Changed</field>
+	    <field name="res_model">ts.request</field>
+	    <field name="default" eval="True"/>
+	    <field name="description">Status changed</field>
+	</record>
+
+	<record id="stage_0" model="ts.request.state">
+		<field name="name">New Request</field>
+		<field name="sequence" eval="0"/>
+		<field name="fold" eval="False"/>
+		<field name="done" eval="False"/>
+	</record>
+
+	<record id="stage_1" model="ts.request.state">
 		<field name="name">Scheduled</field>
 		<field name="sequence" eval="1"/>
 		<field name="fold" eval="False"/>
+		<field name="done" eval="False"/>
 	</record>
 
-	<record id="maintenance.stage_3" model="maintenance.stage">
-	    <field name="name">Time &amp; Replacements</field>
-	    <field name="sequence" eval="2" />
-	    <field name="fold" eval="False" />
+	<record id="stage_2" model="ts.request.state">
+		<field name="name">Time &amp; Replacements</field>
+		<field name="sequence" eval="2"/>
+		<field name="fold" eval="False"/>
+		<field name="done" eval="False"/>
 	</record>
 
-	<record id="maintenance.stage_4" model="maintenance.stage">
-	    <field name="name">Repaired</field>
-	    <field name="sequence" eval="3" />
-	    <field name="fold" eval="False" />
-	    <field name="done" eval="True" />
+	<record id="stage_3" model="ts.request.state">
+		<field name="name">Repaired</field>
+		<field name="sequence" eval="3"/>
+		<field name="fold" eval="False"/>
+		<field name="done" eval="True"/>
 	</record>
 
-	<record id="stage_5" model="maintenance.stage">
-	    <field name="name">Scrap</field>
-	    <field name="sequence" eval="4" />
-	    <field name="fold" eval="True" />
-	    <field name="done" eval="True" />
+	<record id="stage_4" model="ts.request.state">
+		<field name="name">Scrap</field>
+		<field name="sequence" eval="4"/>
+		<field name="fold" eval="True"/>
+		<field name="done" eval="False"/>
 	</record>
-	
-	<record id="stage_6" model="maintenance.stage">
-	    <field name="name">Invoiced</field>
-	    <field name="sequence" eval="5" />
-	    <field name="fold" eval="False" />
-	    <field name="done" eval="True" />
+
+	<record id="stage_5" model="ts.request.state">
+		<field name="name">Invoiced</field>
+		<field name="sequence" eval="5"/>
+		<field name="fold" eval="False"/>
+		<field name="done" eval="True"/>
 	</record>
 </odoo>
 

@@ -3,7 +3,7 @@
 import logging
 from datetime import timedelta
 
-from odoo import models, fields, api, tools, _ 
+from odoo import models, fields, api, tools, _ , SUPERUSER_ID
 from odoo.exceptions import ValidationError, RedirectWarning
 
 
@@ -74,16 +74,19 @@ class TechnicalServiceTeam(models.Model):
 
 	name = fields.Char(string='Name', required=True)
 	member_ids = fields.One2many('res.users', 'technical_team_id', string="Members")
-	color = fields.Integer(string="Color Index", readonly=True)
+	color = fields.Selection([(1, '1'), (2, '2'), (3, '3'), (4, '4'), (5, '5'), (6, '6'), (7, '7'), (8, '8'), (9, '9'), (10, '10'), (11, '11'), (12, '12')], string="Color Index", readonly=True)
 	request_ids = fields.One2many('ts.request', 'technical_team', string="Request")
 	events_ids = fields.One2many('ts.calendar', 'technical_team_id', string="Interventions")
 	rate = fields.Float(string="Rate", help="Service rate per hour", required=True)
 
 	@api.model
 	def create(self, vals):
-		res = super(TechnicalServiceTeam, self).create(vals)
-		res['color'] = res['id']
-		return res
+		if not self.color:
+			res = super(TechnicalServiceTeam, self).create(vals)
+			res['color'] = res['id']
+			return res
+		else:
+			return super(TechnicalServiceTeam, self).create(vals)
 
 	@api.one
 	@api.constrains('rate')
@@ -97,31 +100,78 @@ class TechnicalServiceTeam(models.Model):
 			return {'warning': {'title': _("The rate is still quite low"),
 								'message': _("You can leave it in {} if you want. But remember this is the rate this team will invoice per hour at work.").format(str(self.rate))}}
 
+class TechnicalServiceState(models.Model):
+    _name = 'ts.request.state'
+    _description = 'Technical Service States'
+
+    name = fields.Char('Name', required=True, translate=True)
+    sequence = fields.Integer('Sequence', default=20)
+    fold = fields.Boolean('Folded in Technical Service Pipe')
+    done = fields.Boolean('Request Done')
+
 class TechnicalServiceRequest(models.Model):
 	_name = 'ts.request'
+	_inherit = ['mail.thread']
 	_description = 'Main body of a Tecnical Service Request, also used in the Kanban view.'
-	_inherit = 'maintenance.request'
 
-	def _get_our_companies(self):
+	def _get_comp_clients(self):
 		records = self.env['ts.request'].search([])
-		companies_ids = [rec.related_company_id.id for rec in records]
+		companies_ids = [rec.company_id.id for rec in records]
 
 		return [(6, 0, companies_ids)]
 
-	stage_sequence = fields.Integer(related="stage_id.sequence", readonly=True, store=True)
+	@api.multi
+	def _track_subtype(self, init_values):
+	    self.ensure_one()
+	    if 'state' in init_values and self.state.sequence == 0:
+	        return 'technical_service.ts_req_created'
+	    elif 'state' in init_values and self.state.sequence > 1:
+	        return 'technical_service.ts_req_status'
+	    return super(TechnicalServiceRequest, self)._track_subtype(init_values)
+
+	name = fields.Char('Subject', required=True)
+	archive = fields.Boolean(default=False,  help="Set archive to true to hide the technical request without deleting it.")
+	color = fields.Integer('Color')
+	state = fields.Many2one('ts.request.state', ondelete="restrict", string="Stage", copy=False, default=lambda r: r.env['ts.request.state'].search([('sequence','=', 0)])[0], track_visibility="onchange", group_expand='_read_group_stage_ids')
+	state_sequence = fields.Integer(related="state.sequence", string="State Sequence", store=True)
+	requested_by = fields.Many2one('res.users', 'Created by User', default=lambda r: r.env.uid)
+	request_date = fields.Date('Request Date', default=fields.Date.context_today)
+	close_date = fields.Datetime('Close Date', help="The intervention has finished")
+	priority = fields.Selection([('0', 'Very Low'), ('1', 'Low'), ('2', 'Normal'), ('3', 'High')], string="Priority")
+	kanban_state = fields.Selection([('normal', 'In Progress'), ('blocked', 'Blocked'), ('done', 'Ready for next stage')], string='Kanban State', required=True, default='normal')
 	partner_id = fields.Many2one('res.partner', string="Customer", required=True)
-	our_companies = fields.Many2many('res.partner', store=True, default=_get_our_companies)
+	companies_clients = fields.Many2many('res.partner', store=True, default=_get_comp_clients)
 	address = fields.Char(string="Address", compute="_get_customer_address", store=True, help="Customer address")
 	device = fields.Many2one('ts.device', string="Device", help="The device to be checked")
-	related_company_id = fields.Many2one('res.partner', string="Related Company", required=True, domain="[('is_company','=',True)]")
+	company_id = fields.Many2one('res.partner', string="Company", required=True, domain="[('is_company','=',True)]")
 	custom_field1 = fields.Char(string="Custom Field - 1")
 	custom_field2 = fields.Char(string="Custom Field - 2")
+	user_id = fields.Many2one('res.partner', string="Responsible")
 	technical_team = fields.Many2one('ts.team', string="Technical Team", required=True)
-	requirements = fields.Boolean(default=True)
-	invoice_line_ids = fields.One2many('account.invoice.line', inverse_name="technical_request", string="Replacements & Resources", readonly=False, help="Here you can indicate the resources you spent in the intervention. It'll be invoiced automatically.")
-	invoice_id = fields.Many2one('account.invoice', string="Invoice")
-	schedule_date_ids = fields.One2many('ts.calendar', 'technical_request_id', string="Intervention Time", help="Every line is a technical intervention made in a day. Hours must be filled accordingly")
 	first_schedule_date = fields.Datetime('Scheduled Date', help="The day you plan to visit the customer for the first time")
+	schedule_date_ids = fields.One2many('ts.calendar', 'technical_request_id', string="Intervention Time", help="Every line is a technical intervention made in a day. Hours must be filled accordingly")
+	invoice_line_ids = fields.One2many('account.invoice.line', inverse_name="technical_request", string="Replacements & Resources", readonly=False, help="Here you can indicate the resources you spent in the intervention. It'll be invoiced automatically.")
+	invoice_id = fields.Many2one('account.invoice', string="Invoice", ondelete="cascade")
+	requirements = fields.Boolean(default=True)
+	description = fields.Text('Description')
+
+	@api.multi
+	def archive_equipment_request(self):
+	    self.write({'archive': True})
+
+	@api.multi
+	def reset_equipment_request(self):
+	    self.write({'archive': False, 'state': 0})
+
+	@api.multi
+	def write(self, vals):
+	    if vals and 'kanban_state' not in vals and 'state' in vals:
+	        vals['kanban_state'] = 'normal'
+	    res = super(TechnicalServiceRequest, self).write(vals)
+	    if 'state' in vals:
+	        self.filtered(lambda m: m.state.sequence == 3).write({'close_date': fields.Date.today()})
+	    return res
+
 
 	@api.onchange('first_schedule_date')
 	def _set_first_schedule_date(self):
@@ -135,10 +185,10 @@ class TechnicalServiceRequest(models.Model):
 					'technical_request_id': self.id,
 					}
 
-			if len(self.schedule_date_ids) == 0 and self.stage_id.sequence in (0, 1,):
+			if len(self.schedule_date_ids) == 0 and self.state.sequence in (0, 1,):
 				self.update({'schedule_date_ids': [(0, False, values)]})
 
-			elif self.stage_id.sequence in (0, 1,):
+			elif self.state.sequence in (0, 1,):
 				self.update({'schedule_date_ids': [(1, self.schedule_date_ids[0].id, values)]})
 
 	@api.onchange('technical_team')
@@ -154,9 +204,9 @@ class TechnicalServiceRequest(models.Model):
 		action['res_id'] = self.invoice_id.id
 		return action
 
-	@api.onchange('related_company_id')
+	@api.onchange('company_id')
 	def _get_device_domain(self):
-		res = {'domain': {'device': [('company_id.id', '=', self.related_company_id.id)]}}
+		res = {'domain': {'device': [('company_id.id', '=', self.company_id.id)]}}
 		return res
 
 	@api.depends('partner_id')
@@ -186,29 +236,29 @@ class TechnicalServiceRequest(models.Model):
 				'context': {'name': self.name, 'technical_team_id': self.technical_team.id},
 				}			
 
-		if self.stage_id.sequence == 1:
+		if self.state.sequence == 1:
 			if not self.first_schedule_date:
 				res_id = self.env['ts.request.duration'].create({'b_first_schedule_date': False})
 				action.update({'res_id': res_id.id})
 				return action
 
-		if self.stage_id.sequence in (2, 3, 4, 5,):
+		if self.state.sequence in (2, 3, 4, 5,):
 			if not self.schedule_date_ids:
 				res_id = self.env['ts.request.duration'].create({'b_schedule_date_ids': False})
 				action.update({'res_id': res_id.id})
 				return action
 
-	@api.onchange('stage_id', 'first_schedule_date', 'schedule_date_ids')
+	@api.onchange('state', 'first_schedule_date', 'schedule_date_ids')
 	def _check_requirements(self):
 		self.requirements = True
 
-		if self.stage_id.sequence in (1, 2,):
+		if self.state.sequence in (1,):
 			if not self.first_schedule_date and not self.schedule_date_ids:
 				self.requirements = False
 				return {'warning': {'title': _("Have you scheduled your visit?"),
 									'message': _("Please, click the 'Requirements' button to fill this detail.")}}
 
-		if self.stage_id.sequence in (3, 4,):
+		if self.state.sequence in (2, 3,):
 			if not self.invoice_id:
 				draft = {'partner_id': self.partner_id.id,
 						 'state': 'draft',
@@ -226,14 +276,14 @@ class TechnicalServiceRequest(models.Model):
 				return {'warning': {'title': _("How much time have you spent in this intervention?"),
 									'message': _("Please, click the 'Requirements' button to fill all the details.")}}
 
-		if self.stage_id.sequence == 5:
+		if self.state.sequence == 5:
 			if not self.schedule_date_ids:
 				self.requirements = False
 				return {'warning': {'title': _("How much time have you spent in this intervention?"),
 									'message': _("Please, click the 'Requirements' button to fill all the details.")}}
 
 			if self.invoice_id.state not in ('open', 'paid',):
-				raise ValidationError(_('Sorry, to mark this sertvice as Inoiced you must before create the Invoice.'))
+				raise ValidationError(_('Sorry, to mark this service as Inoiced you must before create the Invoice.'))
 	
 	@api.multi
 	def generate_invoice(self):
@@ -261,4 +311,12 @@ class TechnicalServiceRequest(models.Model):
 
 		self.invoice_id.compute_taxes()
 		self.invoice_id.action_invoice_open()
-		self.stage_id = self.env['maintenance.stage'].search([('sequence','=',5)]).id
+		self.state = self.env['ts.request.state'].search([('sequence', '=', 5)])[0].id
+
+	@api.model
+	def _read_group_stage_ids(self, stages, domain, order):
+	    """ Read group customization in order to display all the stages in the
+	        kanban view, even if they are empty
+	    """
+	    stage_ids = stages._search([], order=order, access_rights_uid=SUPERUSER_ID)
+	    return stages.browse(stage_ids)

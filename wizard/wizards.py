@@ -16,7 +16,7 @@ class TechnicalServiceRequestDuration(models.TransientModel):
 	_description = "Confirm the duration of the Technical Request\
 					in the case it's still 0"
 
-	first_schedule_date = fields.Datetime(string="Scheduled Date", help="Date the maintenance team plans the maintenance.  It should not differ much from the Request Date.")
+	first_schedule_date = fields.Datetime(string="Scheduled Date", help="Date the technical service team plans the intervention. It should not differ much from the Request Date.")
 	b_first_schedule_date = fields.Boolean(default=True)
 	schedule_date_ids = fields.Many2many('ts.calendar', string="New Scheduled Date")
 	b_schedule_date_ids = fields.Boolean(default=True)

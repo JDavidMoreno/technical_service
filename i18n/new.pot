@@ -395,8 +395,8 @@ msgid "Created by"
 msgstr ""
 
 #. modules: maintenance, technical_service
-#: model:ir.model.fields,field_description:maintenance.field_maintenance_request__owner_user_id
-#: model:ir.model.fields,field_description:technical_service.field_technical_service_request__owner_user_id
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_request__requested_by
+#: model:ir.model.fields,field_description:technical_service.field_technical_service_request__requested_by
 msgid "Created by User"
 msgstr ""
 
@@ -1220,7 +1220,7 @@ msgid "Other Applications"
 msgstr ""
 
 #. module: technical_service
-#: model:ir.model.fields,field_description:technical_service.field_technical_service_request__our_companies
+#: model:ir.model.fields,field_description:technical_service.field_technical_service_request__companies_clients
 msgid "Our Companies"
 msgstr ""
 
@@ -1237,7 +1237,7 @@ msgid "Overdue"
 msgstr ""
 
 #. module: maintenance
-#: model:ir.model.fields,field_description:maintenance.field_maintenance_equipment__owner_user_id
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_equipment__requested_by
 #: model:ir.model.fields,field_description:maintenance.field_maintenance_equipment_category__alias_user_id
 #: model_terms:ir.ui.view,arch_db:maintenance.hr_equipment_view_form
 #: model_terms:ir.ui.view,arch_db:maintenance.hr_equipment_view_search
@@ -1336,7 +1336,7 @@ msgid "Record Thread ID"
 msgstr ""
 
 #. module: technical_service
-#: model:ir.model.fields,field_description:technical_service.field_technical_service_request__related_company_id
+#: model:ir.model.fields,field_description:technical_service.field_technical_service_request__company_id
 msgid "Related Company"
 msgstr ""
 
@@ -1540,8 +1540,8 @@ msgid "Sorry, to mark this sertvice as Inoiced you must before create the Invoic
 msgstr ""
 
 #. modules: maintenance, technical_service
-#: model:ir.model.fields,field_description:maintenance.field_maintenance_request__stage_id
-#: model:ir.model.fields,field_description:technical_service.field_technical_service_request__stage_id
+#: model:ir.model.fields,field_description:maintenance.field_maintenance_request__state
+#: model:ir.model.fields,field_description:technical_service.field_technical_service_request__state
 msgid "Stage"
 msgstr ""
 

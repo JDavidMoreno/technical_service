@@ -24,7 +24,7 @@
     'installable': True,
 
     # any module necessary for this one to work correctly
-    'depends': ['base', 'maintenance', 'account'],
+    'depends': ['base', 'account', 'mail'],
 
     # always loaded
     'data': [
