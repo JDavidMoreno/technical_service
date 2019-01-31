@@ -7,5 +7,5 @@
 	<menuitem id="technical_service_devices" name="Devices" parent="technical_service_main" sequence="3"/>
 	<menuitem id="technical_service_devices_action" name="Devices" parent="technical_service_devices" action="devices_action" />
 	<menuitem id="technical_service_device_categories" name="Categories" parent="technical_service_devices" action="device_category_action"/>
-	<menuitem id="technical_service_calendar" name="Calendar" parent="technical_service_main" action="calendar.action_calendar_event" sequence="4"/>
+	<menuitem id="technical_service_calendar" name="Calendar" parent="technical_service_main" action="technical_service_calendar_action" sequence="4"/>
 </odoo>

@@ -270,7 +270,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:maintenance.hr_equipment_request_view_search
 #: model_terms:ir.ui.view,arch_db:maintenance.maintenance_team_kanban
 #: selection:maintenance.request,kanban_state:0
-#: selection:technical.service.request,kanban_state:0
+#: selection:ts.request,kanban_state:0
 msgid "Blocked"
 msgstr ""
 
@@ -282,7 +282,7 @@ msgid "Cancel"
 msgstr ""
 
 #. module: technical_service
-#: model:ir.model,name:technical_service.model_technical_service_device_category
+#: model:ir.model,name:technical_service.model_ts_device_category
 msgid "Categories for Devices"
 msgstr ""
 
@@ -360,13 +360,13 @@ msgid "Confirm"
 msgstr ""
 
 #. module: technical_service
-#: model:ir.model,name:technical_service.model_technical_service_request_duration
+#: model:ir.model,name:technical_service.model_ts_request_duration
 msgid "Confirm the duration of the Technical Request					in the case it's still 0"
 msgstr ""
 
 #. modules: maintenance, technical_service
 #: selection:maintenance.request,maintenance_type:0
-#: selection:technical.service.request,maintenance_type:0
+#: selection:ts.request,maintenance_type:0
 msgid "Corrective"
 msgstr ""
 
@@ -727,7 +727,7 @@ msgstr ""
 
 #. modules: maintenance, technical_service
 #: selection:maintenance.request,priority:0
-#: selection:technical.service.request,priority:0
+#: selection:ts.request,priority:0
 msgid "High"
 msgstr ""
 
@@ -788,7 +788,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:maintenance.hr_equipment_request_view_search
 #: model_terms:ir.ui.view,arch_db:maintenance.maintenance_team_kanban
 #: selection:maintenance.request,kanban_state:0
-#: selection:technical.service.request,kanban_state:0
+#: selection:ts.request,kanban_state:0
 msgid "In Progress"
 msgstr ""
 
@@ -893,7 +893,7 @@ msgstr ""
 
 #. modules: maintenance, technical_service
 #: selection:maintenance.request,priority:0
-#: selection:technical.service.request,priority:0
+#: selection:ts.request,priority:0
 msgid "Low"
 msgstr ""
 
@@ -906,7 +906,7 @@ msgid "Main Attachment"
 msgstr ""
 
 #. module: technical_service
-#: model:ir.model,name:technical_service.model_technical_service_request
+#: model:ir.model,name:technical_service.model_ts_request
 msgid "Main body of a Tecnical Service Request, also used in the Kanban view."
 msgstr ""
 
@@ -1124,7 +1124,7 @@ msgstr ""
 
 #. modules: maintenance, technical_service
 #: selection:maintenance.request,priority:0
-#: selection:technical.service.request,priority:0
+#: selection:ts.request,priority:0
 msgid "Normal"
 msgstr ""
 
@@ -1232,7 +1232,7 @@ msgstr ""
 #. modules: maintenance, technical_service
 #: selection:maintenance.equipment,activity_state:0
 #: selection:maintenance.request,activity_state:0
-#: selection:technical.service.request,activity_state:0
+#: selection:ts.request,activity_state:0
 msgid "Overdue"
 msgstr ""
 
@@ -1263,7 +1263,7 @@ msgstr ""
 #. modules: maintenance, technical_service
 #: selection:maintenance.equipment,activity_state:0
 #: selection:maintenance.request,activity_state:0
-#: selection:technical.service.request,activity_state:0
+#: selection:ts.request,activity_state:0
 msgid "Planned"
 msgstr ""
 
@@ -1288,7 +1288,7 @@ msgstr ""
 
 #. modules: maintenance, technical_service
 #: selection:maintenance.request,maintenance_type:0
-#: selection:technical.service.request,maintenance_type:0
+#: selection:ts.request,maintenance_type:0
 msgid "Preventive"
 msgstr ""
 
@@ -1321,7 +1321,7 @@ msgstr ""
 
 #. modules: maintenance, technical_service
 #: selection:maintenance.request,kanban_state:0
-#: selection:technical.service.request,kanban_state:0
+#: selection:ts.request,kanban_state:0
 msgid "Ready for next stage"
 msgstr ""
 
@@ -1368,7 +1368,7 @@ msgid "Reporting"
 msgstr ""
 
 #. module: technical_service
-#: model:ir.model,name:technical_service.model_technical_service_device
+#: model:ir.model,name:technical_service.model_ts_device
 msgid "Representation of an optional device to by fixed"
 msgstr ""
 
@@ -1619,7 +1619,7 @@ msgid "Technical Service Requests"
 msgstr ""
 
 #. module: technical_service
-#: model:ir.model,name:technical_service.model_technical_service_team
+#: model:ir.model,name:technical_service.model_ts_team
 msgid "Technical Service Teams"
 msgstr ""
 
@@ -1697,7 +1697,7 @@ msgstr ""
 #. modules: maintenance, technical_service
 #: selection:maintenance.equipment,activity_state:0
 #: selection:maintenance.request,activity_state:0
-#: selection:technical.service.request,activity_state:0
+#: selection:ts.request,activity_state:0
 msgid "Today"
 msgstr ""
 
@@ -1777,7 +1777,7 @@ msgstr ""
 
 #. modules: maintenance, technical_service
 #: selection:maintenance.request,priority:0
-#: selection:technical.service.request,priority:0
+#: selection:ts.request,priority:0
 msgid "Very Low"
 msgstr ""
 

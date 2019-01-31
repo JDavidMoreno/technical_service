@@ -272,7 +272,7 @@ msgstr "B Fecha Programada"
 #: model_terms:ir.ui.view,arch_db:maintenance.hr_equipment_request_view_search
 #: model_terms:ir.ui.view,arch_db:maintenance.maintenance_team_kanban
 #: selection:maintenance.request,kanban_state:0
-#: selection:technical.service.request,kanban_state:0
+#: selection:ts.request,kanban_state:0
 msgid "Blocked"
 msgstr "Bloqueado"
 
@@ -284,7 +284,7 @@ msgid "Cancel"
 msgstr "Cancelar"
 
 #. module: technical_service
-#: model:ir.model,name:technical_service.model_technical_service_device_category
+#: model:ir.model,name:technical_service.model_ts_device_category
 msgid "Categories for Devices"
 msgstr "Categorías por Dispositivos"
 
@@ -362,13 +362,13 @@ msgid "Confirm"
 msgstr "Confirmar"
 
 #. module: technical_service
-#: model:ir.model,name:technical_service.model_technical_service_request_duration
+#: model:ir.model,name:technical_service.model_ts_request_duration
 msgid "Confirm the duration of the Technical Request\t\t\t\t\tin the case it's still 0"
 msgstr "Confirma la duración del Servicio Técnico\t\t\t\t\ten el caso de que sea 0"
 
 #. modules: maintenance, technical_service
 #: selection:maintenance.request,maintenance_type:0
-#: selection:technical.service.request,maintenance_type:0
+#: selection:ts.request,maintenance_type:0
 msgid "Corrective"
 msgstr "Correctivo"
 
@@ -731,7 +731,7 @@ msgstr "Ayuda a la gestión de Servicios Técnicos"
 
 #. modules: maintenance, technical_service
 #: selection:maintenance.request,priority:0
-#: selection:technical.service.request,priority:0
+#: selection:ts.request,priority:0
 msgid "High"
 msgstr "Alta"
 
@@ -792,7 +792,7 @@ msgstr "Imagen"
 #: model_terms:ir.ui.view,arch_db:maintenance.hr_equipment_request_view_search
 #: model_terms:ir.ui.view,arch_db:maintenance.maintenance_team_kanban
 #: selection:maintenance.request,kanban_state:0
-#: selection:technical.service.request,kanban_state:0
+#: selection:ts.request,kanban_state:0
 msgid "In Progress"
 msgstr "En progreso"
 
@@ -897,7 +897,7 @@ msgstr "Analisis de les perdidas"
 
 #. modules: maintenance, technical_service
 #: selection:maintenance.request,priority:0
-#: selection:technical.service.request,priority:0
+#: selection:ts.request,priority:0
 msgid "Low"
 msgstr "Baja"
 
@@ -910,7 +910,7 @@ msgid "Main Attachment"
 msgstr "Adjuntos principales"
 
 #. module: technical_service
-#: model:ir.model,name:technical_service.model_technical_service_request
+#: model:ir.model,name:technical_service.model_ts_request
 msgid "Main body of a Tecnical Service Request, also used in the Kanban view."
 msgstr "Cuerpo principal de una Solicitud de Servicio Técnico, también utilizado en la vista Kanban."
 
@@ -1128,7 +1128,7 @@ msgstr "Siguiente mantenimiento preventivo"
 
 #. modules: maintenance, technical_service
 #: selection:maintenance.request,priority:0
-#: selection:technical.service.request,priority:0
+#: selection:ts.request,priority:0
 msgid "Normal"
 msgstr ""
 
@@ -1236,7 +1236,7 @@ msgstr "Eficacia general del equipo (OEE)"
 #. modules: maintenance, technical_service
 #: selection:maintenance.equipment,activity_state:0
 #: selection:maintenance.request,activity_state:0
-#: selection:technical.service.request,activity_state:0
+#: selection:ts.request,activity_state:0
 msgid "Overdue"
 msgstr "Vencidas"
 
@@ -1267,7 +1267,7 @@ msgstr "Modelo padre que contiene el alias. El modelo que contiene la referencia
 #. modules: maintenance, technical_service
 #: selection:maintenance.equipment,activity_state:0
 #: selection:maintenance.request,activity_state:0
-#: selection:technical.service.request,activity_state:0
+#: selection:ts.request,activity_state:0
 msgid "Planned"
 msgstr "Planificado"
 
@@ -1296,7 +1296,7 @@ msgstr ""
 
 #. modules: maintenance, technical_service
 #: selection:maintenance.request,maintenance_type:0
-#: selection:technical.service.request,maintenance_type:0
+#: selection:ts.request,maintenance_type:0
 msgid "Preventive"
 msgstr "Preventivo"
 
@@ -1329,7 +1329,7 @@ msgstr "Tasa"
 
 #. modules: maintenance, technical_service
 #: selection:maintenance.request,kanban_state:0
-#: selection:technical.service.request,kanban_state:0
+#: selection:ts.request,kanban_state:0
 msgid "Ready for next stage"
 msgstr "Lista para la siguiente etapa"
 
@@ -1376,7 +1376,7 @@ msgid "Reporting"
 msgstr "Informes"
 
 #. module: technical_service
-#: model:ir.model,name:technical_service.model_technical_service_device
+#: model:ir.model,name:technical_service.model_ts_device
 msgid "Representation of an optional device to by fixed"
 msgstr "Representación de un dispositivo opcional para ser reparado."
 
@@ -1632,7 +1632,7 @@ msgid "Technical Service Requests"
 msgstr "Solicitudes de Servicio Técnico"
 
 #. module: technical_service
-#: model:ir.model,name:technical_service.model_technical_service_team
+#: model:ir.model,name:technical_service.model_ts_team
 msgid "Technical Service Teams"
 msgstr "Equipos de Servicio Técnico"
 
@@ -1710,7 +1710,7 @@ msgstr "Por realizar"
 #. modules: maintenance, technical_service
 #: selection:maintenance.equipment,activity_state:0
 #: selection:maintenance.request,activity_state:0
-#: selection:technical.service.request,activity_state:0
+#: selection:ts.request,activity_state:0
 msgid "Today"
 msgstr "Hoy"
 
@@ -1791,7 +1791,7 @@ msgstr "Referencia de proveedor"
 
 #. modules: maintenance, technical_service
 #: selection:maintenance.request,priority:0
-#: selection:technical.service.request,priority:0
+#: selection:ts.request,priority:0
 msgid "Very Low"
 msgstr "Muy baja"
 

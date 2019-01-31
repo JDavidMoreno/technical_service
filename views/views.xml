@@ -29,7 +29,7 @@
 
 	<record id="requests_kanban_view" model="ir.ui.view">
 		<field name="name">requests.kaban.view</field>
-		<field name="model">technical.service.request</field>
+		<field name="model">ts.request</field>
 		<field name="inherit_id" ref="maintenance.hr_equipment_request_view_kanban"/>
 		<field name="mode">primary</field>
 		<field name="arch" type="xml">
@@ -55,7 +55,7 @@
 				<field name="stage_id"/>
 				<field name="stage_sequence"/>
 				<field name="first_schedule_date"/>
-				<field name="new_schedule_date"/>
+				<field name="schedule_date_ids"/>
 			</field>
 			<xpath expr="//div[@class='o_kanban_record_top']/b" position="inside">
 				<field name="related_company_id"/>
@@ -76,7 +76,7 @@
 
 	<record id="requests_form_view" model="ir.ui.view">
 		<field name="name">requests.form.view</field>
-		<field name="model">technical.service.request</field>
+		<field name="model">ts.request</field>
 		<field name="arch" type="xml">
 			<form string="Maintenance Request">
 			    <header>
@@ -138,20 +138,15 @@
                         </group>
                     </group>
                     <div class="technical_service" attrs="{'invisible': [('stage_sequence', 'not in', (2, 3, 4, 5))]}">
-                		<label for="new_schedule_date" style="color: #7c7bad;" /><br/>
-                		<field name="new_schedule_date" context="{'default_state': 'open', 'default_allday': False, 'default_name': name}">
-                			<tree editable="bottom" class="technical_service_tree">
-                				<field name="id" invisible="True"/>
-                				<field name="name" invisible="True"/>
-                				<field name="start_datetime" string="Start Visit"/>
-                				<field name="start_date" invisible="True"/>
-                				<field name="start" invisible="True"/>
-                				<field name="stop_datetime" string="End"/>
-                				<field name="stop_date" invisible="True"/>
-                				<field name="stop" invisible="True"/>
-                				<field name="allday" invisible="True"/>
-                				<field name="state" invisible="True"/>
+                		<label for="schedule_date_ids" style="color: #7c7bad;" /><br/>
+                		<field name="schedule_date_ids" context="{'default_name': name, 'default_technical_request_id': active_id, 'default_technical_team_id': technical_team}">
+                			<tree editable="bottom">
+                				<field name="name"/>
+                				<field name="start"/>
                 				<field name="duration" widget="float_time"/>
+                				<field name="stop"/>
+                				<field name="technical_request_id" invisible="True"/>
+                				<field name="technical_team_id" invisible="True"/>
                 			</tree>
                 		</field>
                 		<br/>
@@ -187,14 +182,14 @@
 
     <record id="request_tree_view" model="ir.ui.view">
     	<field name="name">request.tree.view</field>
-    	<field name="model">technical.service.request</field>
+    	<field name="model">ts.request</field>
     	<field name="arch" type="xml">
     		<tree>
     			<field name="name"/>
     			<field name="partner_id"/>
     			<field name="related_company_id"/>
     			<field name="technical_team"/>
-    			<field name="new_schedule_date"/>
+    			<field name="schedule_date_ids" invisible="True"/>
     			<field name="close_date"/>
     		</tree>
     	</field>
@@ -202,7 +197,7 @@
 
     <record id="request_search_view" model="ir.ui.view">
     	<field name="name">request.search.view</field>
-    	<field name="model">technical.service.request</field>
+    	<field name="model">ts.request</field>
     	<field name="arch" type="xml">
     		<search>
 	    		<field name="technical_team"/>
@@ -218,7 +213,7 @@
 
 	<record id="requests_action" model="ir.actions.act_window">
 		<field name="name">Technical Service Requests</field>
-		<field name="res_model">technical.service.request</field>
+		<field name="res_model">ts.request</field>
 	    <field name="view_mode">kanban,form</field>
 	    <field name="view_id" ref="requests_kanban_view"/>
 	    <field name="help" type="html">
@@ -230,7 +225,7 @@
 
 	<record id="teams_form_view" model="ir.ui.view">
 		<field name="name">teams.form.view</field>
-		<field name="model">technical.service.team</field>
+		<field name="model">ts.team</field>
 		<field name="arch" type="xml">
 			<form>
 				<sheet>
@@ -268,6 +263,9 @@
 						<page name="requests" string="Requests">
 							<field name="request_ids"/>
 						</page>
+						<page name="interventions" string="Interventions">
+							<field name="events_ids" />
+						</page>
 					</notebook>
 				</sheet>
 			</form>
@@ -276,13 +274,13 @@
 
 	<record id="teams_action" model="ir.actions.act_window">
 		<field name="name">Teams</field>
-		<field name="res_model">technical.service.team</field>
+		<field name="res_model">ts.team</field>
 		<field name="view_mode">tree,form</field>
 	</record>
 
 	<record id="devices_form_view" model="ir.ui.view">
 		<field name="name">devices.form.view</field>
-		<field name="model">technical.service.device</field>
+		<field name="model">ts.device</field>
 		<field name="arch" type="xml">
 			<form>
 				<sheet>
@@ -306,7 +304,7 @@
 
 	<record id="devices_kanban_view" model="ir.ui.view">
 		<field name="name">devices.kanban.view</field>
-		<field name="model">technical.service.device</field>
+		<field name="model">ts.device</field>
 		<field name="arch" type="xml">
 			<kanban>
 				<field name="id"/>
@@ -318,7 +316,7 @@
 					<t t-name="kanban-box">
 						<div t-attf-class="oe_kanban_card oe_kanban_global_click o_kanban_record_has_image_fill">
 							<div class="o_kanban_image">
-                               <img t-att-alt="record.name.value" t-att-src="kanban_image('technical.service.device', 'image_medium', record.id.raw_value)"/>
+                               <img t-att-alt="record.name.value" t-att-src="kanban_image('ts.device', 'image_medium', record.id.raw_value)"/>
                            </div>
 							<div class="o_dropdown_kanban dropdown">
 								<a role="button" class="dropdown-toggle o-no-caret btn" data-toggle="dropdown" href="#" aria-label="Dropdown menu" title="Dropdown menu">
@@ -347,7 +345,7 @@
 
 	<record id="device_tree_view" model="ir.ui.view">
 		<field name="name">device.tree.view</field>
-		<field name="model">technical.service.device</field>
+		<field name="model">ts.device</field>
 		<field name="arch" type="xml">
 			<tree>
 				<field name="name"/>
@@ -360,7 +358,7 @@
 
 	<record id="device_search_view" model="ir.ui.view">
 		<field name="name">device.search.view</field>
-		<field name="model">technical.service.device</field>
+		<field name="model">ts.device</field>
 		<field name="arch" type="xml">
 			<search>
 				<field name="name"/>
@@ -377,7 +375,7 @@
 
 	<record id="devices_action" model="ir.actions.act_window">
 		<field name="name">Devices</field>
-		<field name="res_model">technical.service.device</field>
+		<field name="res_model">ts.device</field>
 		<field name="view_mode">kanban,tree,form</field>
 		<field name="help" type="html">
 			<p class="o_view_nocontent_smiling_face">
@@ -388,7 +386,7 @@
 
 	<record id="devices_category_form_view" model="ir.ui.view">
 		<field name="name">devices.category.form.view</field>
-		<field name="model">technical.service.device.category</field>
+		<field name="model">ts.device.category</field>
 		<field name="arch" type="xml">
 			<form string="Category">
 				<sheet>
@@ -407,7 +405,7 @@
 
 	<record id="devices_category_tree_view" model="ir.ui.view">
 		<field name="name">device.category.tree.view</field>
-		<field name="model">technical.service.device.category</field>
+		<field name="model">ts.device.category</field>
 		<field name="arch" type="xml">
 			<tree editable="bottom" create="0">
 				<field name="name"/>
@@ -418,7 +416,7 @@
 
 	<record id="device_category_action" model="ir.actions.act_window">
 		<field name="name">Device Categories</field>
-		<field name="res_model">technical.service.device.category</field>
+		<field name="res_model">ts.device.category</field>
 		<field name="view_type">form</field>
 		<field name="view_mode">tree,form</field>
 		<field name="view_id" ref="technical_service.devices_category_tree_view"/>
@@ -427,5 +425,78 @@
 				Add a new category for your Devices
 			</p>
 		</field>
+	</record>
+
+	<record id="ts_calendar_form_view" model="ir.ui.view">
+		<field name="name">ts.calendar.form.view</field>
+		<field name="model">ts.calendar</field>
+		<field name="arch" type="xml">
+			<form string="Technical Service Interventions">
+				<sheet>
+					<h1>
+						<field name="name"/>
+					</h1>
+					<h3 style="color: #7c7bad;">Intervention Details</h3>
+					<hr/>
+					<group>
+						<group>
+							<field name="start"/>
+							<field name="duration" widget="float_time"/>
+							<field name="stop"/>
+						</group>
+						<group>
+							<field name="technical_team_id"/>
+							<field name="technical_request_id"/>
+						</group>
+					</group>
+				</sheet>
+			</form>
+		</field>
+	</record>
+
+	<record id="ts_calendar_tree_view" model="ir.ui.view">
+		<field name="name">ts.calendar.tree.view</field>
+		<field name="model">ts.calendar</field>
+		<field name="arch" type="xml">
+			<tree>
+				<field name="name"/>
+				<field name="start"/>
+				<field name="duration" widget="float_time"/>
+				<field name="stop"/>
+				<field name="technical_team_id" invisible="True"/>
+				<field name="technical_request_id" invisible="True"/>
+			</tree>
+		</field>
+	</record>
+
+	<record id="technical_service_calendar_view" model="ir.ui.view">
+		<field name="name">technical.service.calendar.view</field>
+		<field name="model">ts.calendar</field>
+		<field name="arch" type="xml">
+			<calendar string="Technical Requests Calendar" date_start="start" date_stop="stop" date_delay="duration" event_open_popup="true" mode="week" readonly_form_view_id="%(technical_service.ts_calendar_form_view)s" color="technical_team_id">
+				<field name="name"/>
+				<field name="duration" widget="float_time"/>
+				<field name="technical_team_id"/>
+			</calendar>
+		</field>
+	</record>
+
+	<record id="technical_service_calendar_search" model="ir.ui.view">
+		<field name="name">technical.service.calendar.search</field>
+		<field name="model">ts.calendar</field>
+		<field name="arch" type="xml">
+			<search>
+				<field name="name"/>
+				<field name="technical_team_id"/>
+				<field name="technical_request_id"/>
+			</search>
+		</field>
+	</record>
+
+	<record id="technical_service_calendar_action" model="ir.actions.act_window">
+		<field name="name">Calendar</field>
+		<field name="res_model">ts.calendar</field>
+		<field name="view_mode">calendar,tree,form</field>
+		<field name="view_id" ref="technical_service.technical_service_calendar_view"/>
 	</record>
 </odoo>

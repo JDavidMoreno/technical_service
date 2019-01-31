@@ -14,28 +14,40 @@ _logger = logging.getLogger(__name__)
 class InvoiceLineInherited(models.Model):
 	_inherit = 'account.invoice.line'
 
-	technical_request = fields.Many2one('technical.service.request', string="Technical Request", readonly=True)
+	technical_request = fields.Many2one('ts.request', string="Technical Request", readonly=True)
 
 class TechnicalResUsersInherited(models.Model):
 	_inherit = 'res.users'
 
-	technical_team_id = fields.Many2one('technical.service.team', string="Technical Team")
+	technical_team_id = fields.Many2one('ts.team', string="Technical Team")
 
-class MeetingInherited(models.Model):
-	_inherit = 'calendar.event'
+class TechnicalServiceCalendar(models.Model):
+	_name = 'ts.calendar'
+	_description = 'Calendar dedicated exclusively to technical requests'
 
-	technical_request_id = fields.Many2one('technical.service.request', string="Technical Request")
+	name = fields.Char('Request')
+	start = fields.Datetime('Start Date')
+	stop = fields.Datetime('End Date', compute="_get_stop_date", readonly=True, store=True)
+	duration = fields.Float('Duration')
+	technical_team_id = fields.Many2one('ts.team', string="Technical Team", ondelete="cascade")
+	technical_request_id = fields.Many2one('ts.request', string="Technical Request", ondelete="cascade")
+
+	@api.depends('stop', 'duration', 'start')
+	def _get_stop_date(self):
+		for visit in self:
+			if visit.start and visit.duration:
+				visit.stop = visit.start + timedelta(hours=visit.duration)
 
 class TechnicalServiceDeviceCategory(models.Model):
-	_name = 'technical.service.device.category'
+	_name = 'ts.device.category'
 	_description = 'Categories for Devices'
 
 	name = fields.Char(string="Category", required=True)
 	description = fields.Text(string="Description")
-	device_ids = fields.One2many('technical.service.device', 'category_id', string="Devices")
+	device_ids = fields.One2many('ts.device', 'category_id', string="Devices")
 
 class TechnicalServiceDevice(models.Model):
-	_name = 'technical.service.device'
+	_name = 'ts.device'
 	_description = 'Representation of an optional device to by fixed'
 
 	photo = fields.Binary(string="Image", attachment=True,
@@ -44,8 +56,8 @@ class TechnicalServiceDevice(models.Model):
 	image_medium = fields.Binary(string="Medium-sized image", compute="_get_images", store=True)
 	name = fields.Char(string="Model", required=True)
 	serial_code = fields.Char(string="Serial Code")
-	company_id = fields.Many2one('res.partner', string="Company", domain="[('is_company','=',True)]")
-	category_id = fields.Many2one('technical.service.device.category', string="Category")
+	company_id = fields.Many2one('res.partner', string="Company", domain="[('is_company','=',True)]", ondelete="cascade")
+	category_id = fields.Many2one('ts.device.category', string="Category")
 	notes = fields.Text(string="Notes")
 
 	@api.one
@@ -57,13 +69,14 @@ class TechnicalServiceDevice(models.Model):
 
 
 class TechnicalServiceTeam(models.Model):
-	_name = 'technical.service.team'
+	_name = 'ts.team'
 	_description = 'Technical Service Teams'
 
 	name = fields.Char(string='Name', required=True)
 	member_ids = fields.One2many('res.users', 'technical_team_id', string="Members")
 	color = fields.Integer(string="Color Index", readonly=True)
-	request_ids = fields.One2many('technical.service.request', 'technical_team', string="Request")
+	request_ids = fields.One2many('ts.request', 'technical_team', string="Request")
+	events_ids = fields.One2many('ts.calendar', 'technical_team_id', string="Interventions")
 	rate = fields.Float(string="Rate", help="Service rate per hour", required=True)
 
 	@api.model
@@ -85,12 +98,12 @@ class TechnicalServiceTeam(models.Model):
 								'message': _("You can leave it in {} if you want. But remember this is the rate this team will invoice per hour at work.").format(str(self.rate))}}
 
 class TechnicalServiceRequest(models.Model):
-	_name = 'technical.service.request'
+	_name = 'ts.request'
 	_description = 'Main body of a Tecnical Service Request, also used in the Kanban view.'
 	_inherit = 'maintenance.request'
 
 	def _get_our_companies(self):
-		records = self.env['technical.service.request'].search([])
+		records = self.env['ts.request'].search([])
 		companies_ids = [rec.related_company_id.id for rec in records]
 
 		return [(6, 0, companies_ids)]
@@ -99,15 +112,15 @@ class TechnicalServiceRequest(models.Model):
 	partner_id = fields.Many2one('res.partner', string="Customer", required=True)
 	our_companies = fields.Many2many('res.partner', store=True, default=_get_our_companies)
 	address = fields.Char(string="Address", compute="_get_customer_address", store=True, help="Customer address")
-	device = fields.Many2one('technical.service.device', string="Device", help="The device to be checked")
+	device = fields.Many2one('ts.device', string="Device", help="The device to be checked")
 	related_company_id = fields.Many2one('res.partner', string="Related Company", required=True, domain="[('is_company','=',True)]")
 	custom_field1 = fields.Char(string="Custom Field - 1")
 	custom_field2 = fields.Char(string="Custom Field - 2")
-	technical_team = fields.Many2one('technical.service.team', string="Technical Team", required=True)
+	technical_team = fields.Many2one('ts.team', string="Technical Team", required=True)
 	requirements = fields.Boolean(default=True)
 	invoice_line_ids = fields.One2many('account.invoice.line', inverse_name="technical_request", string="Replacements & Resources", readonly=False, help="Here you can indicate the resources you spent in the intervention. It'll be invoiced automatically.")
 	invoice_id = fields.Many2one('account.invoice', string="Invoice")
-	new_schedule_date = fields.One2many('calendar.event', 'technical_request_id', string="Intervention Time", help="Every line is a technical intervention made in a day. Hours must be filled accordingly")
+	schedule_date_ids = fields.One2many('ts.calendar', 'technical_request_id', string="Intervention Time", help="Every line is a technical intervention made in a day. Hours must be filled accordingly")
 	first_schedule_date = fields.Datetime('Scheduled Date', help="The day you plan to visit the customer for the first time")
 
 	@api.onchange('first_schedule_date')
@@ -115,20 +128,18 @@ class TechnicalServiceRequest(models.Model):
 		if self.first_schedule_date:
 			values = {
 					'name': self.name,
-					'user_id': self.env.user.id,
-					'start_datetime': self.first_schedule_date,
 					'start': self.first_schedule_date,
-					'stop_datetime': self.first_schedule_date + timedelta(hours=1),
 					'stop': self.first_schedule_date + timedelta(hours=1),
 					'duration': 1,
+					'technical_team_id': self.technical_team.id,
 					'technical_request_id': self.id,
 					}
 
-			if len(self.new_schedule_date) == 0 and self.stage_id.sequence in (0, 1,):
-				self.update({'new_schedule_date': [(0, False, values)]})
+			if len(self.schedule_date_ids) == 0 and self.stage_id.sequence in (0, 1,):
+				self.update({'schedule_date_ids': [(0, False, values)]})
 
 			elif self.stage_id.sequence in (0, 1,):
-				self.update({'new_schedule_date': [(1, self.new_schedule_date[0].id, values)]})
+				self.update({'schedule_date_ids': [(1, self.schedule_date_ids[0].id, values)]})
 
 	@api.onchange('technical_team')
 	def _get_team_color(self):
@@ -163,62 +174,60 @@ class TechnicalServiceRequest(models.Model):
 					address += partner_id.country_id.name
 				request.address = address
 
-
 	def check_requirements(self):
 		requirements = {}
 		action = {
 				'name': _("Fill Requirements"),
 				'view_mode': 'form',
 				'view_type': 'form',
-				'res_model': 'technical.service.request.duration',
+				'res_model': 'ts.request.duration',
 				'type': 'ir.actions.act_window',
 				'target': 'new',
-				'context': {'name': self.name},
-				}
+				'context': {'name': self.name, 'technical_team_id': self.technical_team.id},
+				}			
 
 		if self.stage_id.sequence == 1:
 			if not self.first_schedule_date:
-				res_id = self.env['technical.service.request.duration'].create({'b_first_schedule_date': False})
+				res_id = self.env['ts.request.duration'].create({'b_first_schedule_date': False})
 				action.update({'res_id': res_id.id})
 				return action
 
 		if self.stage_id.sequence in (2, 3, 4, 5,):
-			if not self.new_schedule_date:
-				res_id = self.env['technical.service.request.duration'].create({'b_new_schedule_date': False})
+			if not self.schedule_date_ids:
+				res_id = self.env['ts.request.duration'].create({'b_schedule_date_ids': False})
 				action.update({'res_id': res_id.id})
 				return action
 
-	@api.onchange('stage_id', 'first_schedule_date', 'new_schedule_date')
+	@api.onchange('stage_id', 'first_schedule_date', 'schedule_date_ids')
 	def _check_requirements(self):
 		self.requirements = True
-		message = []
 
 		if self.stage_id.sequence in (1, 2,):
+			if not self.first_schedule_date and not self.schedule_date_ids:
+				self.requirements = False
+				return {'warning': {'title': _("Have you scheduled your visit?"),
+									'message': _("Please, click the 'Requirements' button to fill this detail.")}}
+
+		if self.stage_id.sequence in (3, 4,):
 			if not self.invoice_id:
 				draft = {'partner_id': self.partner_id.id,
 						 'state': 'draft',
 						 'type': 'out_invoice',
 						 'account_id': 193,
 						 'currency_id': 1,
-						 'company_id': self.env['res.company']._company_default_get('technical.service.request').id,
+						 'company_id': self.env['res.company']._company_default_get('ts.request').id,
 						 'journal_id': 1,
 						 }
 				invoice = self.env['account.invoice'].create(draft).id
 				self.invoice_id = invoice
 
-			if not self.first_schedule_date and not self.new_schedule_date:
-				self.requirements = False
-				return {'warning': {'title': _("Have you scheduled your visit?"),
-									'message': _("Please, click the 'Requirements' button to fill this detail.")}}
-
-		if self.stage_id.sequence in (3, 4,):
-			if not self.new_schedule_date:
+			if not self.schedule_date_ids:
 				self.requirements = False
 				return {'warning': {'title': _("How much time have you spent in this intervention?"),
 									'message': _("Please, click the 'Requirements' button to fill all the details.")}}
 
 		if self.stage_id.sequence == 5:
-			if not self.new_schedule_date:
+			if not self.schedule_date_ids:
 				self.requirements = False
 				return {'warning': {'title': _("How much time have you spent in this intervention?"),
 									'message': _("Please, click the 'Requirements' button to fill all the details.")}}
@@ -230,7 +239,7 @@ class TechnicalServiceRequest(models.Model):
 	def generate_invoice(self):
 		duration = 0
 
-		for line in self.new_schedule_date:
+		for line in self.schedule_date_ids:
 			duration += line.duration
 
 		service =  {

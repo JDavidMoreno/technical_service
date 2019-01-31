@@ -3,10 +3,10 @@
 <odoo>
 	<record id="duration_wizard" model="ir.ui.view">
 		<field name="name">duration.wizard</field>
-		<field name="model">technical.service.request.duration</field>
+		<field name="model">ts.request.duration</field>
 		<field name="arch" type="xml">
 			<form>
-				<field name="b_new_schedule_date" invisible="1"/>
+				<field name="b_schedule_date_ids" invisible="1"/>
 				<field name="b_first_schedule_date" invisible="1"/>
 				<div attrs="{'invisible': [('b_first_schedule_date', '=', True)]}">
 					<h5><b>When are you going to see your customer?</b></h5>
@@ -17,23 +17,17 @@
 						</group>
 					</group>
 				</div>
-				<div attrs="{'invisible': [('b_new_schedule_date', '=', True)]}">
+				<div attrs="{'invisible': [('b_schedule_date_ids', '=', True)]}">
 					<h5><b>Repair is done, but looks like you didn't add any hour to your service.</b></h5>
 					<p>Add here the time you spent:</p>
-					<field name="new_schedule_date" context="{'default_state': 'open', 'default_allday': False, 'default_name': context.get('name'), 'default_technical_request_id': context.get('active_id')}" widget="one2many_list">
+					<field name="schedule_date_ids" context="{'default_name': context.get('name'), 'default_technical_request_id': context.get('active_id'), 'default_technical_team_id': context.get('technical_team_id')}" widget="one2many_list">
 						<tree editable="bottom">
-							<field name="id" invisible="True"/>
-							<field name="name" invisible="False"/>
-							<field name="start_datetime" string="Start Visit"/>
-							<field name="start_date" invisible="True"/>
-							<field name="start" invisible="True"/>
-							<field name="stop_datetime" string="End"/>
-							<field name="stop_date" invisible="True"/>
-							<field name="stop" invisible="True"/>
-							<field name="allday" invisible="True"/>
-							<field name="state" invisible="True"/>
+							<field name="name"/>
+							<field name="start"/>
 							<field name="duration" widget="float_time"/>
+							<field name="stop"/>
 							<field name="technical_request_id" invisible="True"/>
+							<field name="technical_team_id" invisible="True"/>
 						</tree>
 					</field>
 				</div>
