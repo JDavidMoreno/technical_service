@@ -3,7 +3,7 @@
   <h4>Manages Technical Services and Create Invoices</h4>
   <br>
   <p>
-    <a href="https://github.com/JDavidMoreno/technical_service/blob/main/LICENSE">
+    <a href="https://github.com/JDavidMoreno/technical_service/blob/master/LICENSE">
         <img alt="license" src="https://img.shields.io/badge/license-MIT-green" />
     </a>
     <img alt="python version" src="https://img.shields.io/badge/python-3.5 | 3.6 | 3.7 | 3.8 | 3.9 -blue" />
@@ -34,17 +34,17 @@ Move this module to your addons folder. Then restart your Odoo server and, while
 
 One instaled, you can go the Technical Service app, that should appear as a new addon. From there you can start creating new request, add all the info you need, and move to next stages when needed.
 
-![technical service request](https://github.com/JDavidMoreno/technical_service/blob/main/.github/images/request.png)
+![technical service request](https://github.com/JDavidMoreno/technical_service/blob/master/.github/images/request.png)
 
 At different stages for the request, different kinf of information can be entered. When you know how much time and resources you spent in your services, you can add it there, and finally you can create a Invoice for it.
 
 Also is possible to organise the work with teams.
 
-![technical service team](https://github.com/JDavidMoreno/technical_service/blob/main/.github/images/team.png)
+![technical service team](https://github.com/JDavidMoreno/technical_service/blob/master/.github/images/team.png)
 
 And create and edit the kind of devices you'r going to work with.
 
-![technical service delive](https://github.com/JDavidMoreno/technical_service/blob/main/.github/images/device.png)
+![technical service delive](https://github.com/JDavidMoreno/technical_service/blob/master/.github/images/device.png)
 
 
 ## License
